@@ -1,0 +1,17 @@
+.app {
+    margin: 0 auto;
+    padding: 40px;
+    max-width: 1920px;
+    max-height: 1080px;
+    background: #131316;
+    display: block;
+    color: #F2F2F3;
+}
+
+.main {
+    margin: 0 auto;
+    padding: 0;
+    width: 1240px;
+    height: 878px;
+    display: flex;
+}
