@@ -1,35 +1,34 @@
 import React from 'react';
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './BurgerConstructor.module.css';
-import PropTypes from 'prop-types';
 import OrderDetails from "../OrderDetails/OrderDetails";
-import ingredient from '../../utils/ingredient';
 import data from '../../utils/data'
 
 const BurgerConstructor = () => {
 
-    const listIngridients = data.map((ing, index) =>
-        <OrderDetails key={index} ing={ing}/>
+    {/*Перебираем массив data*/}
+    const listIngredients = data.map((ingredient, index) =>
+        <OrderDetails key={index} ingredient={ingredient}/>
     );
 
-       return (
-           <section className={`${burgerConstructorStyles.test} ml-5`}>
-        <div className={`${burgerConstructorStyles.test} pt-25`}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+           return (
+           <section className={`${burgerConstructorStyles.section} ml-5`}>
+        <div className='pt-25'>
+            <div className={burgerConstructorStyles.container}>
         <ConstructorElement
             type="top"
             isLocked={true}
             text="Краторная булка N-200i (верх)"
             price={200}
             thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
-            background-color={'#1C1C21'}
         />
             </div>
-            <div className={burgerConstructorStyles.card}>
-                {listIngridients}
+            <div className={`${burgerConstructorStyles.card} text_type_main-default mt-4 mb-4 ml-4`}>
+
+                {listIngredients} {/* Выводим ингредиенты*/}
 
             </div>
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+    <div className={burgerConstructorStyles.container}>
         <ConstructorElement
             type="bottom"
             isLocked={true}
@@ -38,21 +37,17 @@ const BurgerConstructor = () => {
             thumbnail={'https://code.s3.yandex.net/react/code/bun-02-mobile.png'}
         />
     </div>
-            <div className={`${burgerConstructorStyles.money} pt-10`}>
-            <h3 className='text text_type_digits-medium'>610</h3>
-
+            <div className={`${burgerConstructorStyles.money} mt-10`}>
+            <h3 className='text text_type_digits-medium mr-10'>610
                 <CurrencyIcon type="primary" />
-            <Button type="primary" size="large" className='ml-10'>
+            </h3>
+            <Button type="primary" size="large" >
                 Оформить заказ
             </Button>
             </div>
         </div>
            </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    item: PropTypes.arrayOf(ingredient.isRequired).isRequired
 }
 
 export default BurgerConstructor;

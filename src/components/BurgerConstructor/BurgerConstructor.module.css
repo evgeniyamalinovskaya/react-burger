@@ -1,15 +1,26 @@
-.test {
-    background-color: aquamarine;
+.section {
+    background: #131316;
     width: 600px;
-
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 36px;
+}
+
+
 .card {
     height: calc(100vh - 464px);
     display: block;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: 8px;
-    margin: 16px 0;
+}
+
+.card::-webkit-scrollbar {
+    width: 8px;
 }
 
 .card::-webkit-scrollbar {
@@ -22,6 +33,7 @@
 }
 
 .list {
+    margin-right: 30px;
     height: 464px;
     display: block;
     box-sizing: border-box;

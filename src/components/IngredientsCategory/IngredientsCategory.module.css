@@ -6,8 +6,10 @@
     padding: 0;
     max-height: 756px;
     overflow-y: auto;
-    scrollbar-width: 8px;
+}
 
+.container::-webkit-scrollbar {
+    width: 8px;
 }
 
 .container::-webkit-scrollbar {
