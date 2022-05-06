@@ -1,22 +1,28 @@
-import { DragIcon, CurrencyIcon, DeleteIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import blockListStyles from './OrderDetails.module.css';
 import React from 'react';
+import PropTypes from 'prop-types';
+import ingredient from '../../utils/ingredient';
+import {DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
+import orderDetailsStyles from './OrderDetails.module.css';
 
-const OrderDetails = (props) => {
+const OrderDetails = ({itemList}) => {
     return (
-        <section className={blockListStyles.OrderDetails}>
-            <DragIcon style={{ marginRight: '8px' }} type="primary" />
-            <div className={blockListStyles.ingredient}>
-                <img className={blockListStyles.ingredientImage} src={props.ingredient.image} alt='' />
-                <p className={blockListStyles.ingredientName}>{props.ingredient.name}</p>
-                <div className={blockListStyles.ingredientPrice}>
-                    <p style={{ marginRight: '8px' }} className="text text_type_digits-default">{props.ingredient.price}</p>
-                    <CurrencyIcon style={{ textAlign: 'end' }} type="primary" />
-                </div>
-                <DeleteIcon type="primary" />
-            </div>
-        </section>
+        <ul className={`${orderDetailsStyles.OrderDetails} pr-2`}>
+            {itemList.map((item) => (
+                <li className={orderDetailsStyles.ingredient} key={item._id}>
+                    <DragIcon type="primary"/>
+                    <ConstructorElement
+                        text={item.name}
+                        price={item.price}
+                        thumbnail={item.image}
+                    />
+                </li>
+            ))}
+        </ul>
     )
+}
+
+OrderDetails.propTypes = {
+    itemList: PropTypes.arrayOf(ingredient.isRequired).isRequired
 }
 
 export default OrderDetails;

@@ -7,6 +7,14 @@
     color: #F2F2F3;
 }
 
+.tab {
+    display: flex;
+}
+
+.citing {
+    all: unset;
+}
+
 .container {
     margin: 40px 0 0 0;
     padding: 0;

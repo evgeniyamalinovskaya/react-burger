@@ -4,19 +4,15 @@
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-left: 36px;
+    padding: 0 0 0 38px;
 }
 
-
 .card {
+    padding: 0;
     height: calc(100vh - 464px);
     display: block;
     overflow-y: auto;
     overflow-x: hidden;
-    scrollbar-width: 8px;
 }
 
 .card::-webkit-scrollbar {
@@ -25,7 +21,6 @@
 
 .card::-webkit-scrollbar {
     background: #2F2F37;
-
 }
 
 .card::-webkit-scrollbar-thumb {

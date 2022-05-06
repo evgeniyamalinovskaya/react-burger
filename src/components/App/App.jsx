@@ -1,5 +1,6 @@
 import React from 'react';
 import AppStyles from './App.module.css';
+import {  } from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';

@@ -4,7 +4,7 @@ import {  BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-de
 
 const AppHeader = () => {
     return(
-        <div className={`${appHeaderStyles.header} pt-4 pb-4`}>
+        <header className={`${appHeaderStyles.header} pt-4 pb-4`}>
             <nav className={appHeaderStyles.content}>
                 <div className={appHeaderStyles.container}>
                     <menu className={appHeaderStyles.list}>
@@ -24,13 +24,13 @@ const AppHeader = () => {
                     <Logo />
                 </div>
                 <div className='pr-5 pl-5'>
-                    <a href='#' className={`${appHeaderStyles.link} text text_type_main-default`}>
+                    <a href='/#' className={`${appHeaderStyles.link} text text_type_main-default`}>
                         <ProfileIcon type="primary" />
                         <span className='ml-2'>Личный кабинет</span>
                     </a>
                 </div>
             </nav>
-        </div>
+        </header>
     )
 }
 
