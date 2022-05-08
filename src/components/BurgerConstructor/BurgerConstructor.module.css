@@ -1,0 +1,51 @@
+.section {
+    background: #131316;
+    width: 600px;
+}
+
+.container {
+    padding: 0 0 0 38px;
+}
+
+.card {
+    padding: 0;
+    height: calc(100vh - 464px);
+    display: block;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.card::-webkit-scrollbar {
+    width: 8px;
+}
+
+.card::-webkit-scrollbar {
+    background: #2F2F37;
+}
+
+.card::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+}
+
+.list {
+    margin-right: 30px;
+    height: 464px;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    gap: 8px;
+}
+
+.listItem {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.money {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+}
