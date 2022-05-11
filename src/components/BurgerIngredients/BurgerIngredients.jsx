@@ -2,12 +2,19 @@ import React from 'react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 import IngredientsCategory from "../IngredientsCategory/IngredientsCategory";
-import categories from '../../utils/categories';
-import data from "../../utils/data";
+import PropTypes from 'prop-types';
+import ingredient from '../../utils/ingredient';
+import Items from '../../utils/Items';
+import Product from '../../utils/Producrts'
 
-const BurgerIngredients = () => {
+
+const BurgerIngredients = ( {ingredients, openModalIngredient} ) => {
+
+    const buns = Items(Product.Bun.type, ingredients);
+    const mains = Items(Product.Main.type, ingredients);
+    const sauces = Items(Product.Sauce.type, ingredients);
+
     const [current, setCurrent] = React.useState('one')
-
     return (
         <div className={`${burgerIngredientsStyles.section} mr-5`}>
             <h1 className={`${burgerIngredientsStyles.title} mt-10 mb-5 text text_type_main-large`}>Соберите бургер</h1>
@@ -30,13 +37,22 @@ const BurgerIngredients = () => {
             </div>
 
             <div className={burgerIngredientsStyles.container}>
-                {categories.map((el) => (
-                    <IngredientsCategory key={el.type} type={el.type} text={el.text} />
-                ))}
+                <IngredientsCategory
+                    categories={buns} type={Product.Bun} openModalIngredient={openModalIngredient} />
+
+                <IngredientsCategory
+                    categories={sauces} type={Product.Sauce} openModalIngredient={openModalIngredient} />
+
+                <IngredientsCategory
+                    categories={mains} type={Product.Main} openModalIngredient={openModalIngredient} />
 
             </div>
         </div>
     )
+}
+
+BurgerIngredients.propTypes = {
+    ingredients:  PropTypes.arrayOf(ingredient.isRequired).isRequired,
 }
 
 export default BurgerIngredients;

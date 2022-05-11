@@ -33,3 +33,7 @@
     padding-bottom: 40px;
 }
 
+.item {
+    list-style: none;
+}
+

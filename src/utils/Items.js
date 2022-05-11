@@ -1,10 +1,12 @@
-const Items = (itemType, arrayOfItems) => {
-    const arr = [];
-    arrayOfItems.forEach((item) => {
-        if (item.type === itemType) {
-            arr.push(item);
+// сортировка массива по типу
+const Items = (type, arr) => {
+    return arr.reduce((acc, item) => {
+        if (item.type === type) {
+            acc.push(item);
         }
-    })
-    return arr;
-}
+        return acc;
+    }, []);
+};
+
 export default Items;
+

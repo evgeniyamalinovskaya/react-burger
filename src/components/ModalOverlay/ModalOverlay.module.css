@@ -1,0 +1,13 @@
+.Overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000;
+    opacity: .6;
+    cursor: pointer;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
