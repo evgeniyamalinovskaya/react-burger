@@ -6,7 +6,7 @@ import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import { Api, parseResponse} from '../Api/Api';
+import { api, parseResponse} from '../Api/Api';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 
 
@@ -15,7 +15,7 @@ const App = () => {
     //Запрос на сервер
     //Функция получения данных (возвращает результат выполнения функции fetch)
     function getData () {
-        fetch(`${Api.url}`)
+        fetch(`${api.url}`)
             .then(parseResponse)
             .then((json) => {setIngredients(json.data)})
             .catch(err => {console.log(err)});
@@ -69,13 +69,13 @@ const App = () => {
             </main>
 
             {isOrderDetailsOpened && (
-            <Modal title="Детали заказа" onOverlayClick={closeAllModals} onEscKeydown={handleEscKeydown}>
+            <Modal title="Детали заказа" onClose={closeAllModals} onEscKeydown={handleEscKeydown}>
                 <OrderDetails />  {/* вложенное содержимое, идет в пропс children */}
             </Modal>
             )}
 
             {isIngredientDetailsOpened && (
-            <Modal title="Детали ингредиентов" onOverlayClick={closeAllModals} onEscKeydown={handleEscKeydown}>
+            <Modal title="Детали ингредиентов" onClose={closeAllModals} onEscKeydown={handleEscKeydown}>
                 <IngredientDetails ingredient={ingredientInModal} />  {/* вложенное содержимое, идет в пропс children */}
             </Modal>
             )}

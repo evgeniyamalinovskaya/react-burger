@@ -1,5 +1,5 @@
 //ссылка
-export const Api = {
+export const api = {
     url: 'https://norma.nomoreparties.space/api/ingredients',
     headers: {
         'Content-Type': 'aplication.json'

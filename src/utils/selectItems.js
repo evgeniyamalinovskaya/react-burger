@@ -1,5 +1,5 @@
 // сортировка массива по типу
-const Items = (type, arr) => {
+const selectItems = (type, arr) => {
     return arr.reduce((acc, item) => {
         if (item.type === type) {
             acc.push(item);
@@ -8,5 +8,5 @@ const Items = (type, arr) => {
     }, []);
 };
 
-export default Items;
+export default selectItems;
 

@@ -4,15 +4,15 @@ import burgerIngredientsStyles from './BurgerIngredients.module.css';
 import IngredientsCategory from "../IngredientsCategory/IngredientsCategory";
 import PropTypes from 'prop-types';
 import ingredient from '../../utils/ingredient';
-import Items from '../../utils/Items';
+import selectItems from '../../utils/selectItems';
 import Product from '../../utils/Producrts'
 
 
 const BurgerIngredients = ( {ingredients, openModalIngredient} ) => {
 
-    const buns = Items(Product.Bun.type, ingredients);
-    const mains = Items(Product.Main.type, ingredients);
-    const sauces = Items(Product.Sauce.type, ingredients);
+    const buns = selectItems(Product.Bun.type, ingredients);
+    const mains = selectItems(Product.Main.type, ingredients);
+    const sauces = selectItems(Product.Sauce.type, ingredients);
 
     const [current, setCurrent] = React.useState('one')
     return (
@@ -53,6 +53,7 @@ const BurgerIngredients = ( {ingredients, openModalIngredient} ) => {
 
 BurgerIngredients.propTypes = {
     ingredients:  PropTypes.arrayOf(ingredient.isRequired).isRequired,
+    openModalIngredient: PropTypes.func.isRequired
 }
 
 export default BurgerIngredients;

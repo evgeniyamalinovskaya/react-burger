@@ -11,7 +11,7 @@ const IngredientsCategory = ({ categories, type, openModalIngredient }) => {
             <ul className={`${ingredientsCategoryStyles.ingredients} pl-4 pr-2`}>
                 {categories.map((item) => (
                 <li key={item._id} onClick={() => openModalIngredient(item)}>
-                    <Ingredient name={item.name} image={item.image} price={item.price}/>
+                    <Ingredient ingredients={item} onClick={openModalIngredient}/>
                 </li>
                 ))}
             </ul>
@@ -22,6 +22,7 @@ const IngredientsCategory = ({ categories, type, openModalIngredient }) => {
 IngredientsCategory.propTypes = {
     type: PropTypes.object.isRequired,
     categories: PropTypes.array.isRequired,
+    openModalIngredient: PropTypes.func.isRequired
 }
 
 export default IngredientsCategory;
