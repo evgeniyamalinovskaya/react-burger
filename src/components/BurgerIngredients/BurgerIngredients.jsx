@@ -37,15 +37,18 @@ const BurgerIngredients = ( {ingredients, openModalIngredient} ) => {
             </div>
 
             <div className={burgerIngredientsStyles.container}>
+                <a name='bun'>
                 <IngredientsCategory
                     categories={buns} type={Product.Bun} openModalIngredient={openModalIngredient} />
-
+                </a>
+                <a name='sauce'>
                 <IngredientsCategory
                     categories={sauces} type={Product.Sauce} openModalIngredient={openModalIngredient} />
-
+                </a>
+                <a name='main'>
                 <IngredientsCategory
                     categories={mains} type={Product.Main} openModalIngredient={openModalIngredient} />
-
+                </a>
             </div>
         </div>
     )
