@@ -42,11 +42,6 @@ const App = () => {
         // тут же закрываем и другие модалки
     };
 
-    // Обработка нажатия Esc
-    const handleEscKeydown = (e) => {
-        e.key === "Escape" && closeAllModals();
-    };
-
     // Клик по ингредиенту
     const openModalIngredientDetails = (item) => {
         setIngredientInModal (item)
@@ -69,13 +64,13 @@ const App = () => {
             </main>
 
             {isOrderDetailsOpened && (
-            <Modal title="Детали заказа" onClose={closeAllModals} onEscKeydown={handleEscKeydown}>
+            <Modal title="Детали заказа" onClose={closeAllModals}>
                 <OrderDetails />  {/* вложенное содержимое, идет в пропс children */}
             </Modal>
             )}
 
             {isIngredientDetailsOpened && (
-            <Modal title="Детали ингредиентов" onClose={closeAllModals} onEscKeydown={handleEscKeydown}>
+            <Modal title="Детали ингредиентов" onClose={closeAllModals}>
                 <IngredientDetails ingredient={ingredientInModal} />  {/* вложенное содержимое, идет в пропс children */}
             </Modal>
             )}

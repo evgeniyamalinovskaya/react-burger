@@ -8,15 +8,19 @@ import PropTypes, {array} from 'prop-types';
 // Находим DOM-элемент для отрисовки в нем модальных окон
 const modalsContainer = document.querySelector('#modals');
 
-const Modal = ({ onClose, onEscKeydown, children }) => {
+const Modal = ({ onClose, children }) => {
+
+    // Обработка нажатия Esc
+    const handleEscKeydown = (e) => {
+        e.key === "Escape" && onClose();
+    };
+
     // При монтировании компонента (открытии модалки) навешиваем на document обработчик Esc
     // При демонтаже компонента (закрытии модалки) удаляем обработчик
     React.useEffect(() => {
-        document.addEventListener('keydown', onEscKeydown);
-        document.addEventListener('Escape', onClose);
+        document.addEventListener('keydown', handleEscKeydown);
         return () => {
-            document.removeEventListener('keydown', onEscKeydown);
-            document.removeEventListener('Escape', onClose);
+            document.removeEventListener('keydown', handleEscKeydown);
         }
     }, [])
 
@@ -37,7 +41,6 @@ const Modal = ({ onClose, onEscKeydown, children }) => {
 
 Modal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    onEscKeydown: PropTypes.func.isRequired,
     children: PropTypes.array.isRequired
 };
 
