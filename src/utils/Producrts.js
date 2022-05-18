@@ -1,7 +1,16 @@
-const Products = {
-    bun: {type: 'bun'},
-    main: {type: 'main'},
-    sauce: {type: 'sauce'}
+const Product = {
+    Bun: {
+        type: 'bun',
+        name: 'Булки',
+    },
+    Main: {
+        type: 'main',
+        name: 'Начинки',
+    },
+    Sauce: {
+        type: 'sauce',
+        name: 'Соусы',
+    },
 };
 
-export default Products;
+export default Product;

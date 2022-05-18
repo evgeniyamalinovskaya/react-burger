@@ -1,28 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import ingredient from '../../utils/ingredient';
-import {DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
-import orderDetailsStyles from './OrderDetails.module.css';
+import orderDetailsStyle from './OrderDetails.module.css';
 
-const OrderDetails = ({itemList}) => {
-    return (
-        <ul className={`${orderDetailsStyles.OrderDetails} pr-2`}>
-            {itemList.map((item) => (
-                <li className={orderDetailsStyles.ingredient} key={item._id}>
-                    <DragIcon type="primary"/>
-                    <ConstructorElement
-                        text={item.name}
-                        price={item.price}
-                        thumbnail={item.image}
-                    />
-                </li>
-            ))}
-        </ul>
+const OrderDetails = () => {
+    return(
+        <div className={`${orderDetailsStyle.container} pt-30 pb-30`}>
+            <h2 className={`${orderDetailsStyle.titleNumbers} text text_type_digits-large`}>034536</h2>
+            <p className='text text_type_main-medium pt-8'>Идентификатор заказа</p>
+            <img className={`${orderDetailsStyle.image} pt-15 pb-15`} src={require('./images/done.png')} alt="Галочка"  />
+            <p className='text text_type_main-default pb-2'>Ваш заказ начали готовить</p>
+            <p className='text text_type_main-default text_color_inactive'>Дождитесь готовности на орбитальной станции</p>
+        </div>
     )
-}
-
-OrderDetails.propTypes = {
-    itemList: PropTypes.arrayOf(ingredient.isRequired).isRequired
 }
 
 export default OrderDetails;

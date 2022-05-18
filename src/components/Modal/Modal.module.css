@@ -1,0 +1,31 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 720px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%, -50%);
+    z-index: 2;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    cursor: default;
+    transition: visibility 0.1s linear, opacity 0.1s linear;
+}
+
+.closeButton {
+    padding: 0;
+    background-color: transparent;
+    position: absolute;
+    top: 55px;
+    right: 35px;
+    border: none;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity .3s ease-in;
+}
+
+.closeButton:hover {
+    opacity: 0.6;
+}

@@ -5,6 +5,7 @@
     row-gap: 4px;
     position: relative;
     max-width: 272px;
+    cursor: pointer;
 }
 
 .price {

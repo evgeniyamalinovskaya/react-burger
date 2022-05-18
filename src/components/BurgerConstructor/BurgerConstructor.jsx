@@ -1,16 +1,14 @@
 import React from 'react';
 import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './BurgerConstructor.module.css';
-import OrderDetails from '../OrderDetails/OrderDetails';
-import data from '../../utils/data';
-import Items from '../../utils/Items';
-import Products from '../../utils/Producrts';
+import ConstructorDetails from '../ConstructorDetails/ConstructorDetails';
+import PropTypes from "prop-types";
+import ingredient from '../../utils/ingredient';
 
-const sauceArray = Items(Products.sauce.type, data);
-const fillingArray = Items(Products.main.type, data);
-const allIngredients = sauceArray.concat(fillingArray);  //создаем новый массив соединенный с двумя элементами в объекте
+const BurgerConstructor = ( {ingredients, openModalOrder} ) => {
 
-const BurgerConstructor = () => {
+    const allIngredients = ingredients.filter((el) => el.type !== 'bun')
+
     return (
         <div className={`${burgerConstructorStyles.section} ml-5 pt-25`}>
             <div className={burgerConstructorStyles.container}>
@@ -23,7 +21,7 @@ const BurgerConstructor = () => {
                 />
             </div>
             <div className={`${burgerConstructorStyles.card} text_type_main-default mt-4 mb-4 ml-4`}>
-                <OrderDetails itemList={allIngredients}/>
+                <ConstructorDetails ingredients={allIngredients}/>
             </div>
             <div className={burgerConstructorStyles.container}>
                 <ConstructorElement
@@ -38,11 +36,16 @@ const BurgerConstructor = () => {
                 <h3 className='text text_type_digits-medium mr-10'>610
                     <CurrencyIcon type="primary"/>
                 </h3>
-                <Button type="primary" size="large">Оформить заказ</Button>
+                <Button type="primary" size="large" onClick={() => openModalOrder()}>Оформить заказ</Button>
             </div>
         </div>
     )
 }
+
+BurgerConstructor.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredient.isRequired).isRequired,
+    openModalOrder: PropTypes.func.isRequired,
+};
 
 export default BurgerConstructor;
 
