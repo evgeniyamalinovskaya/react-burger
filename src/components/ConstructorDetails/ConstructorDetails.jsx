@@ -1,13 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ingredient from '../../utils/ingredient';
+import React, { useContext } from 'react';
 import {DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorDetailsStyles from './ConstructorDetails.module.css';
+import BurgerIngredientsContext from "../../services/BurgerIngredientsContext";
 
-const ConstructorDetails = ({ingredients}) => {
+const ConstructorDetails = () => {
+    const ingredients = useContext(BurgerIngredientsContext);
+    const allIngredients = ingredients.filter((el) => el.type !== 'bun')
+
     return (
         <ul className={`${constructorDetailsStyles.OrderDetails} pr-2`}>
-            {ingredients.map((item) => (
+            {allIngredients.map((item) => (
                 <li className={constructorDetailsStyles.ingredient} key={item._id}>
                     <DragIcon type="primary" />
                     <ConstructorElement
@@ -20,10 +22,5 @@ const ConstructorDetails = ({ingredients}) => {
         </ul>
     )
 }
-
-ConstructorDetails.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredient.isRequired).isRequired
-}
-
 
 export default ConstructorDetails;
