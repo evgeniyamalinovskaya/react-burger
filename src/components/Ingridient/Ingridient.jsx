@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ingredient from "../../utils/ingredient";
 
 const Ingredient = ({ingredients}) => {
+
     return (
         <div className={ingredientStyles.ingredient}>
             <img className="ml-4 mr-4" src={ingredients.image} alt={ingredients.name}/>

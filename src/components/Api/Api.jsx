@@ -1,6 +1,6 @@
 //ссылка
 export const api = {
-    url: 'https://norma.nomoreparties.space/api/ingredients',
+    url: 'https://norma.nomoreparties.space/api',
     headers: {
         'Content-Type': 'aplication.json'
     }
@@ -13,3 +13,4 @@ export const parseResponse = (res) => {
     }
     return Promise.reject(new Error(`Произошла ошибка со статус-кодом ${res.status}`));
 }
+
