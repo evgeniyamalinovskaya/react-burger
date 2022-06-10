@@ -1,8 +1,11 @@
 import React from 'react';
-import PropTypese from 'prop-types';
+import { useSelector } from 'react-redux';
 import orderDetailsStyle from './OrderDetails.module.css';
 
-const OrderDetails = ({orderNumber}) => {
+const OrderDetails = () => {
+
+    const  orderNumber = useSelector(store => store.order);
+
     return(
         <div className={`${orderDetailsStyle.container} pt-30 pb-30`}>
             <h2 className={`${orderDetailsStyle.titleNumbers} text text_type_digits-large`}>{orderNumber.order.number}</h2>
@@ -14,8 +17,5 @@ const OrderDetails = ({orderNumber}) => {
     )
 }
 
-OrderDetails.propTypese = {
-    orderNumber: PropTypese.number.isRequired,
-};
 
 export default OrderDetails;

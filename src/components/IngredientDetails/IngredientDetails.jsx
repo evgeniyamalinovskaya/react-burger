@@ -1,7 +1,5 @@
 import React from 'react';
 import ingredientDetailsStyle from './IngredientDetails.module.css';
-import PropTypes from 'prop-types';
-import ingredient from '../../utils/ingredient';
 
 const IngredientDetails = ({ingredient}) => {
 
@@ -14,11 +12,7 @@ const IngredientDetails = ({ingredient}) => {
                 <li className={ingredientDetailsStyle.item}>
                     <p className='text text_type_main-default text_color_inactive'>Калории, ккал</p>
                     <span className='text text_type_main-default text_color_inactive'>{ingredient.calories}</span>
-                </li>
-                <li className={ingredientDetailsStyle.item}>
-                    <p className='text text_type_main-default text_color_inactive'>Белки, г</p>
-                    <span className='text text_type_main-default text_color_inactive'>{ingredient.proteins}</span>
-                </li>
+                </li>      >
                 <li className={ingredientDetailsStyle.item}>
                     <p className='text text_type_main-default text_color_inactive'>Жиры, г</p>
                     <span className='text text_type_main-default text_color_inactive'>{ingredient.fat}</span>
@@ -30,10 +24,6 @@ const IngredientDetails = ({ingredient}) => {
             </ul>
         </div>
     )
-}
-
-IngredientDetails.propTypes = {
-    ingredient: ingredient.isRequired
 }
 
 export default IngredientDetails;

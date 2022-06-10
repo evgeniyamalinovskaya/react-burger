@@ -1,3 +1,33 @@
+# Проект: Реакт бургер
+
+### Обзор
+
+* Описание проекта и его функциональности
+
+* Технологии
+* 
+  **Описание проекта и его функциональности**
+Собираем космический бургер сами!!!
+В этом приложении при клике на ингредиент открывается модальное окно в котором ты узнаешь калорийность продукта.
+
+Figma
+
+* Ссылка на макет
+
+* Ссылка на макет
+
+Технологии
+
+* React.js
+* Redux
+* React-DND
+* HTML
+* CSS
+* JavaScript
+* Webpack
+* API
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
