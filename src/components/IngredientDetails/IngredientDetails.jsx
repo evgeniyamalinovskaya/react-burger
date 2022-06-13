@@ -12,7 +12,7 @@ const IngredientDetails = ({ingredient}) => {
                 <li className={ingredientDetailsStyle.item}>
                     <p className='text text_type_main-default text_color_inactive'>Калории, ккал</p>
                     <span className='text text_type_main-default text_color_inactive'>{ingredient.calories}</span>
-                </li>      >
+                </li>
                 <li className={ingredientDetailsStyle.item}>
                     <p className='text text_type_main-default text_color_inactive'>Жиры, г</p>
                     <span className='text text_type_main-default text_color_inactive'>{ingredient.fat}</span>

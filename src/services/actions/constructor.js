@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 //Экшены для конструктора ингредиентов
 export const ADD_BUN = 'ADD_BUN';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
@@ -6,20 +8,32 @@ export const REORDER_INGREDIENT = 'REORDER_INGREDIENT'
 export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
 
 
-export function addBun (item) {
+// export function addBun (item) {
+//     return {
+//         type: ADD_BUN,
+//         item,
+//     };
+// }
+
+// export function addItem (item) {
+//     return {
+//         type: ADD_INGREDIENT,
+//         item,
+//     };
+// }
+
+export function addBun(item) {
+
     return {
         type: ADD_BUN,
-        item,
+        item: {
+            ...item,
+            uId: uuidv4()
+        }
     };
 }
 
-export function addItem (item) {
-    return {
-        type: ADD_INGREDIENT,
-        item,
-    };
-}
-
+//Удаление ингредиента из выбранного списка
 export function deleteItem (item) {
     return {
         type: DELETE_INGREDIENT,
@@ -27,9 +41,11 @@ export function deleteItem (item) {
     };
 }
 
-export function resetItem () {
+export function resetItem (dragIndex, hoverIndex) {
     return {
         type: RESET_INGREDIENT,
+        dragIndex,
+        hoverIndex
     };
 }
 

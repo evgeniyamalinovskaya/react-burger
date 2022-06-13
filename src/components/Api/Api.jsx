@@ -22,11 +22,11 @@ const getData = () => {
         .then(res => parseResponse(res))
 };
 
-const setData = (order) => {
+const setData = (productIds) => {
     return fetch(`${api.url}/orders`, {
         headers: api.headers,
         method: 'POST',
-        body: JSON.stringify({ingredients: order})
+        body: JSON.stringify({ingredients: productIds})
     })
         .then(res => parseResponse(res))
 };

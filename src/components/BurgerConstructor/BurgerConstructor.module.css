@@ -50,6 +50,19 @@
     align-items: center;
 }
 
+.ElementsItem {
+    list-style-type: none;
+    width: 568px;
+    display: flex;
+    align-items: center;
+
+}
+
+.ElementsConstructor {
+
+    width: 488px;
+}
+
 .top {
     left:20px;
     width: 88%;

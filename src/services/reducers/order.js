@@ -1,8 +1,14 @@
-import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED,} from '../actions/order' ;
+import {
+    GET_ORDER_REQUEST,
+    GET_ORDER_SUCCESS,
+    GET_ORDER_FAILED,
+    OPEN_ORDER_MODAL,
+    CLOSE_ORDER_MODAL,
+} from '../actions/order' ;
+import {CLOSE_INGREDIENT, OPEN_INGREDIENT} from "../actions/ingredient";
 
 // Исходное состояние
 const initialOrderState = {
-    orderIngredients: [],
     orderNumber: null,
     orderRequest: false,
     orderFailed: false,
@@ -15,26 +21,36 @@ export const orderReducer = (state = initialOrderState, action) => {
             return {
                 ...state,
                 orderRequest: true,
-                orderIngredients: action.orderIngredients
             };
         }
         //Успешный ответ на получение деталей ингредиентов
         case GET_ORDER_SUCCESS: {
             return {
                 ...state,
-                price: action.price,
-                orderNumber: action.res.order.number,
+                orderNumber: action.orderNumber,
                 orderRequest: false,
-                orderFailed: false
+                orderFailed: false,
             };
         }
         //Ответ не пришел
         case GET_ORDER_FAILED: {
             return {
                 ...state,
-                orderIngredients: [],
                 orderRequest: false,
-                orderFailed: false,
+                orderFailed: true,
+            };
+        }
+        case OPEN_ORDER_MODAL: {
+            return {
+                ...state,
+                detailOpenedModal: true
+            };
+        }
+        case CLOSE_ORDER_MODAL: {
+            return {
+                ...state,
+                orderNumber: null,
+                detailOpenedModal: false
             };
         }
         default:

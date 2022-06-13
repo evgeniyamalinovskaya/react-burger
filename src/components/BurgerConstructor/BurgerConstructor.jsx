@@ -1,18 +1,18 @@
-import React, { useMemo} from 'react';
+import React, { useMemo, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './BurgerConstructor.module.css';
 import ConstructorDetails from '../ConstructorDetails/ConstructorDetails';
 import {getOrder} from "../../services/actions/order";
-import {addBun} from "../../services/actions/constructor";
+import { addBun, deleteItem} from "../../services/actions/constructor";
 import { useDrop } from 'react-dnd';
-import {ElementBurgerConstructor} from "../ElementBurgerConstructor/ElementBurgerConstructor";
-import {burgerConstructorReducer} from "../../services/reducers/constructor";
+import bunImage from './image/PyhkoigriqQ8Q4t7EziOdA.png';
 
 const BurgerConstructor = () => {
 
     const element = useSelector(store => store.burgerConstructor.element);
     const bun = useSelector(store => store.burgerConstructor.bun);
+    const productsIds = useSelector(store => store.burgerConstructor.productsIds)
     //Функция для использование подсчёта стоимости
     const price = useMemo(() => {
         return (
@@ -24,24 +24,28 @@ const BurgerConstructor = () => {
     const dispatch = useDispatch();
 
     //Открытие модального окна оформить заказ
-    const orderModal = (orderId) => {
-        dispatch(getOrder(orderId));
+    const orderModal = (ids) => {
+        dispatch(getOrder(ids));
     };
-    console.log(orderModal)
+
     const [{ isHover }, dropTarget] = useDrop({
         accept: "ingredient",
         drop(item) {
             dispatch(addBun(item));
         },
         collect: (monitor) => ({
-            isHover: monitor.isOver(),
+            isHover: monitor.canDrop(),
         }),
     });
 
+    const handleDelete = (item) => {
+        dispatch(deleteItem(item));
+    }
+
     return (
-        <div className={`${burgerConstructorStyles.section} ml-5 pt-25`}  >
+        <div className={`${burgerConstructorStyles.section} ml-5 pt-25`}>
             <div className={burgerConstructorStyles.container}>
-                <div сlassName={ isHover
+                <div сlassname={ isHover
                             ? `${burgerConstructorStyles.top} ${burgerConstructorStyles.overbun}`
                             : `${burgerConstructorStyles.top} `
                     } ref={dropTarget}>
@@ -60,25 +64,23 @@ const BurgerConstructor = () => {
                         isLocked={true}
                         text="Выберите булку из списка слева"
                         price={0}
-                        thumbnail={bun}
+                        thumbnail={bunImage}
                 />
                         )}
                 </div>
+                {!bun && <p className='text text_type_digits-default text_color_inactive pt-8 pl-10'>Выберите и перетащите слева начинки и соусы для бургера</p>}
             <div className={`${burgerConstructorStyles.card} text_type_main-default mt-4 mb-4 ml-4`}>
 
-                {element.filter(item => {
-                    return item.type !== 'bun' }).map((item, index) => (
-                <ElementBurgerConstructor id={item.id} index={index} key={item.id}>
-                 {/*<ConstructorDetails  />*/}
-
-                 </ElementBurgerConstructor>
+                {element.length > 0 && element.filter(item => { return item.type !== 'bun' }).map((item, index)=>(
+                    <ConstructorDetails
+                        key={item.uId}
+                        item={item}
+                        index={index}
+                        handleDelete={handleDelete} />
                 ))}
 
             </div>
-
-            <div className={burgerConstructorStyles.container}>
-
-                <div сlassName={ isHover
+                <div сlassname={ isHover
                     ? `${burgerConstructorStyles.bottom} ${burgerConstructorStyles.overbun}`
                     : `${burgerConstructorStyles.bottom} `
                 }>
@@ -89,7 +91,7 @@ const BurgerConstructor = () => {
                     text={`${bun.name} (низ)`}
                     price={bun.price}
                     thumbnail={bun.image_mobile}
-                    key={`top:${bun._id}`}
+                    key={`bottom:${bun._id}`}
                 />
                 )
                 : (< ConstructorElement
@@ -97,7 +99,7 @@ const BurgerConstructor = () => {
                     isLocked={true}
                     text="Выберите булку из списка слева"
                     price={0}
-                    thumbnail={bun}
+                    thumbnail={bunImage}
                 />
                 )}
             </div>
@@ -106,16 +108,12 @@ const BurgerConstructor = () => {
                     {price}
                     <CurrencyIcon type="primary"/>
                 </h3>
-                <Button type="primary" size="large"  onClick={() => orderModal()}>Оформить заказ</Button>
+                <Button type="primary" size="large"  onClick={() => orderModal(productsIds)}>Оформить заказ</Button>
 
             </div>
         </div>
             </div>
-        </div>
-
     )
 }
 
 export default BurgerConstructor;
-
-

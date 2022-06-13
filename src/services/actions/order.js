@@ -4,17 +4,31 @@ import { setData } from "../../components/Api/Api";
 export const GET_ORDER_REQUEST = "GET_ORDER_REQUEST";
 export const GET_ORDER_SUCCESS = "GET_ORDER_SUCCESS";
 export const GET_ORDER_FAILED = "GET_ORDER_FAILED";
+export const OPEN_ORDER_MODAL = "OPEN_ORDER_MODAL";
+export const CLOSE_ORDER_MODAL = "CLOSE_ORDER_MODAL";
 
-export function getOrder(orderId) {
+export function openOrderModal() {
+    return {
+        type: OPEN_ORDER_MODAL,
+    };
+}
+
+export function closeOrderModal() {
+    return {
+        type: CLOSE_ORDER_MODAL,
+    };
+}
+
+export function getOrder(order) {
     return function (dispatch) {
         dispatch({
             type: GET_ORDER_REQUEST
         });
-        setData(orderId)
+        setData(order)
             .then((res) => {
                     dispatch({
                         type: GET_ORDER_SUCCESS,
-                        order: res.order.number,
+                        orderNumber: res.order.number,
                     });
             })
             .catch((err) => {
@@ -22,6 +36,7 @@ export function getOrder(orderId) {
                     type: GET_ORDER_FAILED,
                 })
                 console.log(err)
-            });
+            })
+            .finally(() => dispatch({type: OPEN_ORDER_MODAL}));
     };
 }

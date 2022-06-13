@@ -26,10 +26,10 @@ const Ingredient = ({ingredient}) => {
     // счетчик наличия ингрединта в меню
     const setCount = useMemo(() => {
         if (ingredient.type === 'bun') {
-            return bun && ingredient._id === bun._id ? 1 : 0;
+            return bun && ingredient._id === bun._id ? 2 : 0;
         }
-        return element && element.filter((elementItem) => elementItem._id === ingredient._id).length;
-    }, [bun, element, ingredient._id, ingredient.type]);
+        return element && element.filter((el) => el._id === ingredient._id).length;
+    }, [bun, element]);
 
     return (
         <div className={ingredientStyles.ingredient} onClick={()=> handleOpenModal(ingredient)} style={{ isDrag }} ref={dragRef}
