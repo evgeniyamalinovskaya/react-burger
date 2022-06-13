@@ -12,24 +12,25 @@ const Ingredient = ({ingredient}) => {
     const handleOpenModal = (ingredient) => {
         dispatch(openIngredientCurrent(ingredient));
     };
+    /* Обращение к store */
     const { bun, element } = useSelector(store => store.burgerConstructor);
     const [{ isDrag }, dragRef] = useDrag(
         {
             type: 'ingredient',
-            item: ingredient,
+            item: { ingredient },
             collect: (monitor) => ({
                 isDrag: monitor.isDragging(),
             }),
         },
         [bun, element],
     );
-    // счетчик наличия ингрединта в меню
+    // счетчик наличия ингредиента в меню
     const setCount = useMemo(() => {
         if (ingredient.type === 'bun') {
             return bun && ingredient._id === bun._id ? 2 : 0;
         }
         return element && element.filter((el) => el._id === ingredient._id).length;
-    }, [bun, element]);
+    }, [bun, element, ingredient._id, ingredient.type]);
 
     return (
         <div className={ingredientStyles.ingredient} onClick={()=> handleOpenModal(ingredient)} style={{ isDrag }} ref={dragRef}

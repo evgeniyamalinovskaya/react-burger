@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import orderDetailsStyle from './OrderDetails.module.css';
 
 const OrderDetails = () => {
-
+    /* Обращение к store */
     const  { orderFailed, orderNumber } = useSelector(store => store.order);
 
     return(
@@ -13,7 +13,7 @@ const OrderDetails = () => {
                 <p className='text text_type_main-default'>Произошла ошибка</p>
                 :
                 <>
-                    <h2 className={`${orderDetailsStyle.titleNumbers} text text_type_digits-large`}>{orderNumber.order.number}</h2>
+                    <h2 className={`${orderDetailsStyle.titleNumbers} text text_type_digits-large`}>{orderNumber}</h2>
                     <p className='text text_type_main-medium pt-8'>Идентификатор заказа</p>
                     <img className={`${orderDetailsStyle.image} pt-15 pb-15`} src={require('./images/done.png')}
                          alt="Галочка"/>

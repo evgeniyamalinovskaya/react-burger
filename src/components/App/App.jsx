@@ -1,4 +1,4 @@
-import React from 'react';
+import React , { useCallback }from 'react';
 import AppStyles from './App.module.css';
 import {} from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from '../AppHeader/AppHeader';
@@ -12,13 +12,13 @@ import {getIngredients} from '../../services/actions/ingredients'
 import {closeModalIngredient} from "../../services/actions/ingredient";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import {closeOrderModal, openOrderModal} from "../../services/actions/order";
+import {closeOrderModal} from "../../services/actions/order";
 
 const App = () => {
     //Стор состояния в компонентах
     const { ingredientsRequest, ingredientsFailed } = useSelector(store => store.burgerIngredients);
+    const  orderNumber  = useSelector(store => store.order.orderNumber);
 
-    const detailOpenedModal  = useSelector(store => store.ingredient.detailOpenedModal);
     const dispatch = useDispatch();
     React.useEffect(() => {
         // Отправляем экшен при монтировании компонента
@@ -26,20 +26,15 @@ const App = () => {
     }, [dispatch]);
 
     //Стор для открытия модального окна
-    const openModal = useSelector(store => store.ingredient.openModal);
+    const openDetailsModal = useSelector(store => store.ingredient.openDetailsModal);
 
-    // Клик по крестику модального окна (закрывает модальное окно)
-    // const handleCloseModal = (item) => {
-    //     dispatch(closeModalIngredient(item));
-    // };
-
-    const closeDetailsModal = () => {
-        dispatch(closeModalIngredient());
-    };
-
-    const handleCloseModal = React.useCallback(() => {
-        dispatch(openOrderModal());
+    // Закрываем модальные окна
+    const handleCloseOrder = useCallback(() => {
         dispatch(closeOrderModal());
+    }, [dispatch]);
+
+    const handleDetailsModal = useCallback(() => {
+        dispatch(closeModalIngredient());
     }, [dispatch]);
 
     return (
@@ -53,14 +48,14 @@ const App = () => {
                 </DndProvider>
             </main>
             )}
-            {openModal &&
-                <Modal title="Детали ингредиентов" onClose={closeDetailsModal}>
-                    <IngredientDetails ingredient={openModal}/> {/* вложенное содержимое, идет в пропс children */}
+            {openDetailsModal &&
+                <Modal title="Детали ингредиентов" onClose={handleDetailsModal}>
+                    <IngredientDetails ingredient={openDetailsModal}/> {/* вложенное содержимое, идет в пропс children */}
                 </Modal>
             }
 
-            {detailOpenedModal &&  (
-                <Modal title="Детали заказа" onClose={handleCloseModal}>
+            {orderNumber &&  (
+                <Modal title="Детали заказа" onClose={handleCloseOrder}>
                     <OrderDetails />
                 </Modal>
             )}

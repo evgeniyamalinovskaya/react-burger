@@ -2,7 +2,7 @@
 const api = {
     url: 'https://norma.nomoreparties.space/api',
     headers: {
-        'Content-Type': 'aplication.json'
+        'Content-Type': 'application/json'
     }
 };
 
@@ -22,11 +22,11 @@ const getData = () => {
         .then(res => parseResponse(res))
 };
 
-const setData = (productIds) => {
+const setData = (productsIds) => {
     return fetch(`${api.url}/orders`, {
         headers: api.headers,
         method: 'POST',
-        body: JSON.stringify({ingredients: productIds})
+        body: JSON.stringify({ingredients: productsIds})
     })
         .then(res => parseResponse(res))
 };

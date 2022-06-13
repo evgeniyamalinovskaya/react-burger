@@ -18,7 +18,7 @@ const store = createStore(rootReducer, enhancer);
 ReactDOM.render(
     // Оборачиваем приложение компонентом Provider из пакета react-redux
     <Provider store={store}>
-    <App />
+    <App/>
     </Provider>,
   document.getElementById('root')
 );
