@@ -28,7 +28,7 @@ const BurgerConstructor = () => {
         dispatch(getOrder(ids));
     };
 
-    const [{ isHover }, dropTarget] = useDrop({
+    const [{ isHover }, drop] = useDrop({
         accept: "ingredient",
         drop(item) {
             dispatch(addBun(item));
@@ -48,7 +48,7 @@ const BurgerConstructor = () => {
                 <div сlassname={ isHover
                             ? `${burgerConstructorStyles.top} ${burgerConstructorStyles.overbun}`
                             : `${burgerConstructorStyles.top} `
-                    } ref={dropTarget}>
+                    } ref={drop}>
                     {bun ? (
                     < ConstructorElement
                         type="top"
@@ -68,16 +68,17 @@ const BurgerConstructor = () => {
                 />
                         )}
                 </div>
-                {!bun && <p className='text text_type_digits-default text_color_inactive pt-8 pl-10'>Выберите и перетащите слева начинки и соусы для бургера</p>}
+                {/*{!bun && <p className='text text_type_digits-default text_color_inactive pt-8 pl-10'>Выберите и перетащите слева начинки и соусы для бургера</p>}*/}
             <div className={`${burgerConstructorStyles.card} text_type_main-default mt-4 mb-4 ml-4`}>
 
-                {element.length > 0 && element.filter(item => { return item.type !== 'bun' }).map((item, index)=>(
-                    <ConstructorDetails
+                {/*{element.length > 0 && element.filter(item => { return item.type !== 'bun' }).map((item, index)=>(*/}
+                {   element && element.length > 0 && element.map((item, index) =>
+                <ConstructorDetails
                         key={item.uId}
                         item={item}
                         index={index}
                         handleDelete={handleDelete} />
-                ))}
+                )}
 
             </div>
                 <div сlassname={ isHover

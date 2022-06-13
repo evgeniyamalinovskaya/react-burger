@@ -26,6 +26,11 @@ export const burgerConstructorReducer = (state = initialConstructorState, action
                     };
                 }
             }
+            return {
+                ...state,
+                element: [...state.element, action.item ],
+                productsIds: [...state.productsIds, action.item._id],
+            };
         // case ADD_INGREDIENT:
         //     if (action.item.type !== "bun") {
         //         return {

@@ -58,16 +58,16 @@ const ConstructorDetails = ( {item, index, handleDelete} ) => {
             isDragging: monitor.isDragging(),
         }),
     });
-
+    console.log("element")
     const opacity = isDragging ? 0 : 1;
 
     drag(drop(ref));
 
 
     return (
-        <ul className={`${constructorDetailsStyles.OrderDetails} pr-2`}>
+        <ul className={`${constructorDetailsStyles.OrderDetails} pr-2`} ref={ref}>
             {element.map((item) => (
-        <li className={`${constructorDetailsStyles.OrderDetails} mb-4`} ref={ref}
+        <li className={`${constructorDetailsStyles.OrderDetails} mb-4`}
             data-handler-id={handlerId} style={{ opacity }} >
             <span className={constructorDetailsStyles.ingredient}>
                 <DragIcon type="primary" />
