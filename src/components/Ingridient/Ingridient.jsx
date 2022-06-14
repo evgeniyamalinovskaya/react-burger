@@ -1,10 +1,11 @@
 import React, {useMemo} from "react";
 import ingredientStyles from './Ingridient.module.css'
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {openIngredientCurrent} from "../../services/actions/ingredient";
 import {useDispatch, useSelector} from "react-redux";
 import { useDrag } from 'react-dnd';
+import ingredient from "../../utils/ingredient";
 
 const Ingredient = ({ingredient}) => {
     const dispatch = useDispatch();
@@ -47,5 +48,8 @@ const Ingredient = ({ingredient}) => {
     )
 }
 
+Ingredient.propTypes = {
+    ingredient: ingredient.isRequired
+}
 
 export default Ingredient;

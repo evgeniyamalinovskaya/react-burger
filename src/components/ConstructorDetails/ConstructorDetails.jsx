@@ -64,7 +64,7 @@ const ConstructorDetails = ( {item, index, handleDelete} ) => {
 
 
     return (
-        <ul className={constructorDetailsStyles.OrderDetails} data-handler-id={handlerId} style={{ opacity }}>
+        <ul className={constructorDetailsStyles.OrderDetails} data-handler-id={handlerId} ref={ref} style={{ opacity }}>
         <li className={`${constructorDetailsStyles.ingredient} mb-4`}>
             <span >
                 <DragIcon type="primary" />
