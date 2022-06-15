@@ -3,13 +3,13 @@ const Product = {
         type: 'bun',
         name: 'Булки',
     },
-    Main: {
-        type: 'main',
-        name: 'Начинки',
-    },
     Sauce: {
         type: 'sauce',
         name: 'Соусы',
+    },
+    Main: {
+        type: 'main',
+        name: 'Начинки',
     },
 };
 

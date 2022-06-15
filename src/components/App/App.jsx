@@ -1,104 +1,62 @@
-import React from 'react';
+import React , { useCallback }from 'react';
 import AppStyles from './App.module.css';
 import {} from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import { useDispatch, useSelector } from 'react-redux';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
-import {api, parseResponse} from '../Api/Api';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import BurgerIngredientsContext from '../../services/BurgerIngredientsContext';
+import {getIngredients} from '../../services/actions/ingredients'
+import {closeModalIngredient} from "../../services/actions/ingredient";
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import {closeOrderModal} from "../../services/actions/order";
 
 const App = () => {
-    //Запрос на сервер
-    //Функция получения данных (возвращает результат выполнения функции fetch)
-    const getData = () => {
-        fetch(`${api.url}/ingredients`)
-            .then(res => parseResponse(res))
-            .then((json) => {
-                setIngredients(json.data);
-            })
-            .catch((err) => console.log(err));
-    }
+    //Стор состояния в компонентах
+    const { ingredientsRequest, ingredientsFailed } = useSelector(store => store.burgerIngredients);
+    const  orderNumber  = useSelector(store => store.order.orderNumber);
 
-    //При нажатии на кнопку «Оформить заказ» отправляйте запрос к API
-    const setData = () => {
-        return fetch(`${api.url}/orders`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': "application/json;charset=utf-8",
-            },
-            body: JSON.stringify({"ingredients": ['60d3b41abdacab0026a733c6']})
-        })
-            .then(res => parseResponse(res))
-            .then((orderNumber) => {
-                setOrderNumber(orderNumber)
-            })
-            .catch((err) => setOrderNumber(null));
-    }
-
-    //Первый аргумент хука useEffect — функция, код которой выполняется
-    //при монтировании компонента, изменении его пропсов или состояния.
+    const dispatch = useDispatch();
     React.useEffect(() => {
-        getData()// запрашиваем ингредиенты с сервера
-    }, []);
+        // Отправляем экшен при монтировании компонента
+        dispatch(getIngredients());
+    }, [dispatch]);
 
-    //useState один из API хуков
-    const [ingredients, setIngredients] = React.useState([])
+    //Стор для открытия модального окна
+    const openDetailsModal = useSelector(store => store.ingredient.openDetailsModal);
 
-    const [isOrderDetailsOpened, setIsOrderDetailsOpened] = React.useState(false); // Булевый стейт для "Оформить заказ" модалки
-    const [isIngredientDetailsOpened, setIsIngredientDetailsOpened] = React.useState(false); // Булевый стейт для "Деталей ингредиента" модалки
-    const [ingredientInModal, setIngredientInModal] = React.useState({});
+    // Закрываем модальные окна
+    const handleCloseOrder = useCallback(() => {
+        dispatch(closeOrderModal());
+    }, [dispatch]);
 
-    //Создаю стейт с текущим номером заказа
-    const [orderNumber = {
-        name: "",
-        order: {
-            number: ""
-        },
-        success: false
-    }, setOrderNumber] = React.useState()
-
-    // Закрытие всех модалок
-    const closeAllModals = () => {
-        setIsOrderDetailsOpened(false);
-        setIsIngredientDetailsOpened(false);
-        // тут же закрываем и другие модалки
-    };
-
-    // Клик по ингредиенту
-    const openModalIngredientDetails = (item) => {
-        setIngredientInModal(item)
-        setIsIngredientDetailsOpened(true);
-    }
-
-    // Клик по кнопке Оформить заказ
-    const openModalOrderDetails = () => {
-        setIsOrderDetailsOpened(true)
-        setData(orderNumber)
-    }
+    const handleDetailsModal = useCallback(() => {
+        dispatch(closeModalIngredient());
+    }, [dispatch]);
 
     return (
         <div className={AppStyles.app}>
             <AppHeader/>
+            {!ingredientsFailed && !ingredientsRequest && (
             <main className={AppStyles.main}>
-                <BurgerIngredientsContext.Provider value={ingredients}>
-                    <BurgerIngredients openModalIngredient={openModalIngredientDetails}/>
-                    <BurgerConstructor openModalOrder={openModalOrderDetails}/>
-                </BurgerIngredientsContext.Provider>
+                <DndProvider backend={HTML5Backend}>
+                    <BurgerIngredients/>
+                    <BurgerConstructor />
+                </DndProvider>
             </main>
-
-            {isOrderDetailsOpened &&  (
-                <Modal title="Детали заказа" onClose={closeAllModals}>
-                    <OrderDetails orderNumber={orderNumber}/> {/* вложенное содержимое, идет в пропс children */}
-                </Modal>
             )}
+            {openDetailsModal &&
+                <Modal title="Детали ингредиентов" onClose={handleDetailsModal}>
+                    <IngredientDetails ingredient={openDetailsModal}/> {/* вложенное содержимое, идет в пропс children */}
+                </Modal>
+            }
 
-            {isIngredientDetailsOpened && (
-                <Modal title="Детали ингредиентов" onClose={closeAllModals}>
-                    <IngredientDetails
-                        ingredient={ingredientInModal}/> {/* вложенное содержимое, идет в пропс children */}
+            {orderNumber &&  (
+                <Modal title="Детали заказа" onClose={handleCloseOrder}>
+                    <OrderDetails />
                 </Modal>
             )}
 

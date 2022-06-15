@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import modalStyles from './Modal.module.css';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes, {array} from 'prop-types';
+import PropTypes from 'prop-types';
 
 // Находим DOM-элемент для отрисовки в нем модальных окон
 const modalsContainer = document.querySelector('#modals');
@@ -41,7 +41,7 @@ const Modal = ({ onClose, children }) => {
 
 Modal.propTypes = {
     onClose: PropTypes.func.isRequired,
-    children: PropTypes.array.isRequired
+    children: PropTypes.node.isRequired
 };
 
 export default Modal;

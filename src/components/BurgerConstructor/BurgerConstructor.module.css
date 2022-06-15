@@ -1,14 +1,24 @@
 .section {
     background: #131316;
-    width: 600px;
+    max-width: 600px;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    max-height: 921px;
 }
 
 .container {
-    padding: 0 0 0 38px;
+    margin: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
 }
 
 .card {
-    padding: 0;
     height: calc(100vh - 464px);
     display: block;
     overflow-y: auto;
@@ -49,3 +59,30 @@
     justify-content: end;
     align-items: center;
 }
+
+.top {
+    display: flex;
+    left:20px;
+    width: 88%;
+    height: 77px;
+    position: relative;
+    border: solid 2px #c9c2ec;
+    border-radius: 88px 88px 40px 40px;
+    margin: 0;
+    padding: 0;
+}
+
+.bottom {
+    display: flex;
+    left:20px;
+    width: 88%;
+    height: 77px;
+    position: relative;
+    border: solid 2px #c9c2ec;
+    border-radius: 40px 40px 88px 88px;
+}
+
+.overbun {
+    border-radius: 5px solid blue;
+}
+
