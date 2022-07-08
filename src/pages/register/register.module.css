@@ -1,0 +1,54 @@
+.container {
+    margin: 180px auto 0 auto;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    margin: 0;
+}
+
+.list {
+    padding: 0 0 24px 0;
+    margin: 0;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    border: none;
+}
+
+.form {
+    width: 100%;
+}
+
+.form div {
+    width: 100%;
+}
+
+.list svg {
+    margin-left: 190px;
+}
+
+.form button {
+    margin-left: calc(240px - 126px);
+}
+
+.text {
+    width: 480px;
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    text-decoration: none;
+    font-family: JetBrains Mono;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #4C4CFF;
+    text-align: center;
+    padding: 0 0 0 8px;
+}

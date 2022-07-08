@@ -1,5 +1,6 @@
 import React, {useMemo} from "react";
 import ingredientStyles from './Ingridient.module.css'
+import { Link, useLocation } from 'react-router-dom';
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import {openIngredientCurrent} from "../../services/actions/ingredient";
@@ -9,6 +10,7 @@ import ingredient from "../../utils/ingredient";
 
 const Ingredient = ({ingredient}) => {
     const dispatch = useDispatch();
+    const location = useLocation();
     // Клик по ингредиенту (открывает модальное окно)
     const handleOpenModal = (ingredient) => {
         dispatch(openIngredientCurrent(ingredient));
@@ -34,7 +36,12 @@ const Ingredient = ({ingredient}) => {
     }, [bun, element, ingredient._id, ingredient.type]);
 
     return (
-        <div className={ingredientStyles.ingredient} onClick={()=> handleOpenModal(ingredient)} style={{ isDrag }} ref={dragRef}
+        <Link className={ingredientStyles.link}
+        to={{
+            pathname: `/ingredients/${ingredient._id}`,
+            state: { background: location }
+        }}>
+        <div className={ingredientStyles.ingredient} onClick={handleOpenModal} style={{ isDrag }} ref={dragRef}
              draggable>
             {setCount > 0 && <Counter count={setCount} size="default" />}
             <img className="ml-4 mr-4" src={ingredient.image} alt={ingredient.name}/>
@@ -45,6 +52,7 @@ const Ingredient = ({ingredient}) => {
             <p className={`${ingredientStyles.text} text text_type_main-default`}>{ingredient.name}</p>
 
         </div>
+        </Link>
     )
 }
 

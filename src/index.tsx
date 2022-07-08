@@ -4,6 +4,7 @@ import './index.css';
 import App from '../src/components/App/App';
 import reportWebVitals from './reportWebVitals';
 import { compose, applyMiddleware, createStore } from 'redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from "react-redux";
 import thunk from 'redux-thunk';
 import { rootReducer } from './services/reducers/index';
@@ -16,10 +17,11 @@ const enhancer = composeEnhancers(applyMiddleware(thunk));
 const store = createStore(rootReducer, enhancer);
 
 ReactDOM.render(
-    // Оборачиваем приложение компонентом Provider из пакета react-redux
-    <Provider store={store}>
-    <App/>
-    </Provider>,
+    <Router>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </Router>,
   document.getElementById('root')
 );
 

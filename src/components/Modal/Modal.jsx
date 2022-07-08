@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 // Находим DOM-элемент для отрисовки в нем модальных окон
 const modalsContainer = document.querySelector('#modals');
 
-const Modal = ({ onClose, children }) => {
+export const Modal = ({ onClose, children }) => {
 
     // Обработка нажатия Esc
     const handleEscKeydown = (e) => {
@@ -44,4 +44,4 @@ Modal.propTypes = {
     children: PropTypes.node.isRequired
 };
 
-export default Modal;
+
