@@ -152,7 +152,6 @@ export const registration = (state = initialState, action) => {
                 logoutFailed: true,
                 logoutRequest: false
         }
-
         case RESTORE_PASSWORD_REQUEST:
             return {
                 ...state,

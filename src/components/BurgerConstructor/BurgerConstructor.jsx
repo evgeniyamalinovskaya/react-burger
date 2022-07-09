@@ -7,10 +7,12 @@ import {getOrder} from "../../services/actions/order";
 import { addBun, deleteItem} from "../../services/actions/constructor";
 import { useDrop } from 'react-dnd';
 import bunImage from './image/PyhkoigriqQ8Q4t7EziOdA.png';
+import {useHistory} from "react-router-dom";
 
 const BurgerConstructor = () => {
     /* Обращение к store */
     const element = useSelector(store => store.burgerConstructor.element);
+    const user = useSelector(store => store.user.user);
     const bun = useSelector(store => store.burgerConstructor.bun);
     const productsIds = useSelector(store => store.burgerConstructor.productsIds);
     //Функция для использование подсчёта стоимости
@@ -22,10 +24,11 @@ const BurgerConstructor = () => {
     }, [bun, element]);
 
     const dispatch = useDispatch();
-
+    const history = useHistory();
     //Открытие модального окна оформить заказ
     const orderModal = (ids) => {
-        dispatch(getOrder(ids));
+        user && dispatch(getOrder(ids));
+        !user && history.push('/login')
     };
 
     const [{ isHover }, drop] = useDrop({

@@ -80,21 +80,21 @@ const App = () => {
             </main>
             )}
                     </Route>
-                   <ProtectedRoute exact path='/login' >
+                   <Route exact path='/login' >
                       <Login />
-                   </ProtectedRoute>
+                   </Route>
                    <Route exact path='/register'>
                       <Register />
                    </Route>
-                    <Route exact  path='/forgot-password'>
+                    <Route exact path='/forgot-password'>
                         <ForgotPassword />
                     </Route>
                     <Route exact path='/reset-password'>
                         <ResetPassword />
                     </Route>
-                   <Route exact path='/profile'>
+                   <ProtectedRoute exact path='/profile'>
                       <Profile />
-                   </Route>
+                   </ProtectedRoute>
                     <Route
                         path='/ingredients/:id'>
                         <IngredientDetails />

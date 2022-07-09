@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 import profileStyles from './profile.module.css';
 import { Button, Input, EmailInput, PasswordInput, } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -38,10 +38,13 @@ export const Profile = () => {
     }
 
     //Выход
-    const logoutCancel = (e) => {
+    const logoutCancel = useCallback(
+        (e) => {
         e.preventDefault();
             dispatch(logOut());
-        };
+        },
+        [dispatch]
+    );
 
     //Сохранение
     const submitHandler = (e) => {
@@ -89,8 +92,8 @@ export const Profile = () => {
                 <li>
                     <NavLink
                         activeClassName={profileStyles.linkActive}
-                        className={`${profileStyles.link} text text_type_main-medium`} to='/login'>
-                        <span className="text text_type_main-medium" onClick={logoutCancel}>Выход</span>
+                        className={`${profileStyles.link} text text_type_main-medium`} to='/login' onClick={logoutCancel} >
+                        <span className="text text_type_main-medium">Выход</span>
                     </NavLink>
                 </li>
             </ul>
