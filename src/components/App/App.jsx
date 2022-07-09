@@ -21,6 +21,7 @@ import { ResetPassword } from "../../pages/reset-password/reset-password";
 import { NotFound404 } from "../../pages/notFound404/notFound404";
 import {getUserInfo, token} from "../../services/actions/registration";
 import { getCookie } from '../../utils/cookie'
+import ProtectedRoute from '../../pages/protectedRoute/protectedRoure';
 
 const App = () => {
     //Стор состояния в компонентах
@@ -30,7 +31,7 @@ const App = () => {
     const dispatch = useDispatch();
     const location = useLocation();
     const history = useHistory();
-    let background = location.state?.background;
+    const background = location.state?.background;
     const cookie = getCookie('token')
     const refreshTokenData = localStorage.getItem('token');
     const tokenSuccess = useSelector(store => store.user.tokenSuccess);
@@ -79,9 +80,9 @@ const App = () => {
             </main>
             )}
                     </Route>
-                   <Route exact path='/login' >
+                   <ProtectedRoute exact path='/login' >
                       <Login />
-                   </Route>
+                   </ProtectedRoute>
                    <Route exact path='/register'>
                       <Register />
                    </Route>

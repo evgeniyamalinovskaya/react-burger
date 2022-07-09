@@ -1,17 +1,16 @@
-import React, { useState, useRef } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useState } from 'react';
+import {Link, Redirect, useLocation } from 'react-router-dom';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import loginStyles from './login.module.css';
 import { authorizationUser } from "../../services/actions/registration";
 import {useDispatch, useSelector} from "react-redux";
 
+//Авторизация пользователя
 export const Login = () => {
     const user = useSelector((store) => store.user.user);
     const dispatch = useDispatch();
+    const location = useLocation();
 
-    //Инициализируем хук useRef начальное значение
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
     //Состояния (текущее и обновленное)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,14 +31,14 @@ export const Login = () => {
     //Проверяем, авторизован ли пользователь
     if (user) {
         return (
-            <Redirect to={ '/'} />
+            <Redirect to={ location?.state?.from || '/'} />
         );
     }
 
 return (
         <div className={loginStyles.container}>
             <h2 className={`${loginStyles.title} text text_type_main-medium`}>Вход</h2>
-            <form className={loginStyles.form} onClick={submitLogin}>
+            <form className={loginStyles.form} onSubmit={submitLogin}>
                 <div className="mt-6 mb-6">
                     <EmailInput
                         placeholder="email"
@@ -47,7 +46,6 @@ return (
                         type="email"
                         onChange={inputEmail}
                         value={email}
-                        ref={emailRef}
                         error={false}
                         errorText="Ошибка"
                         size="default"
@@ -60,7 +58,6 @@ return (
                         type="password"
                         onChange={inputPassword}
                         value={password}
-                        ref={passwordRef}
                         icon="EditIcon"
                         size="default"
                         error={false}

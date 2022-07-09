@@ -1,5 +1,5 @@
 import React, { useState, useRef  } from 'react';
-import { Link, useHistory, Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import resetPasswordStyles from './reset-password.module.css';
 import { useDispatch, useSelector } from 'react-redux';

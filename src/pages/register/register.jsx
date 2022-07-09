@@ -9,9 +9,6 @@ import {registrationUser} from "../../services/actions/registration";
 export const Register = () => {
     const dispatch = useDispatch();
     const user = useSelector(store => store.user.user);
-    //Инициализируем хук useRef начальное значение
-    const inputNameRef = React.useRef(null);
-    const inputEmailRef = React.useRef(null);
 
     const [userNameForm, setUserNameForm] = React.useState('');
     const [emailForm, setEmailForm] = React.useState('');
@@ -43,7 +40,7 @@ export const Register = () => {
     return (
             <main className={registerStyles.container}>
                 <h2 className={`${registerStyles.title} text text_type_main-medium pb-6`}>Регистрация</h2>
-                <form className={registerStyles.form}  onClick={onRegisterUser}>
+                <form className={registerStyles.form} onSubmit={onRegisterUser}>
                     <div className={registerStyles.list}>
                         <Input
                             placeholder='Имя'
@@ -51,7 +48,6 @@ export const Register = () => {
                             type='text'
                             value={userNameForm}
                             onChange={inputName}
-                            ref={inputNameRef}
                             size="default"
                             error={false}
                             errorText="Ошибка"
@@ -62,7 +58,6 @@ export const Register = () => {
                             type='email'
                             value={emailForm}
                             onChange={inputEmail}
-                            ref={inputEmailRef}
                             size="default"
                             error={false}
                             errorText="Ошибка"
