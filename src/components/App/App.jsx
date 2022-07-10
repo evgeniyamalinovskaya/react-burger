@@ -92,9 +92,9 @@ const App = () => {
                     <Route exact path='/reset-password'>
                         <ResetPassword />
                     </Route>
-                   <Route exact path='/profile'>
+                   <ProtectedRoute exact path='/profile'>
                       <Profile />
-                   </Route>
+                   </ProtectedRoute>
                     <Route
                         path='/ingredients/:id'>
                         <IngredientDetails />
