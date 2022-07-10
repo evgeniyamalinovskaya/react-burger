@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from "react";
-import { NavLink, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import profileStyles from './profile.module.css';
 import { Button, Input, EmailInput, PasswordInput, } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from 'react-redux';
@@ -52,21 +52,14 @@ export const Profile = () => {
     //Отмена
     const reset = (e) => {
         e.preventDefault()
-        setNameForm('')
-        setLoginForm('')
+        setNameForm(user.name)
+        setLoginForm(user.login)
         setPasswordForm('')
     }
 
     React.useEffect(() => {
         dispatch(getUserInfo());
     }, [dispatch])
-
-    //Проверяем, авторизован ли пользователь
-    if (user) {
-        return (
-            <Redirect to='/login' />
-        )
-    }
 
     return (
     <main className={profileStyles.wrapper}>
@@ -75,7 +68,7 @@ export const Profile = () => {
                 <li>
                     <NavLink
                         className={`${profileStyles.link} text text_type_main-medium`}
-                        activeClassName={profileStyles.linkActive} to='/profile'>
+                        activeClassName={profileStyles.linkActive} exact to='/profile'>
                         <span className="text text_type_main-medium">Профиль</span>
                     </NavLink>
                 </li>
