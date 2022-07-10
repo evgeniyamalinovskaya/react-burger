@@ -142,8 +142,7 @@ export const registration = (state = initialState, action) => {
         case LOGOUT_SUCCESS:
             return {
                 ...state,
-                logoutFailed: false,
-                user: action.payload,
+                user: null,
                 logoutRequest: false
             }
         case LOGOUT_FAILED:

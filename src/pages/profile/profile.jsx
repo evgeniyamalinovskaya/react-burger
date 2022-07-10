@@ -38,13 +38,10 @@ export const Profile = () => {
     }
 
     //Выход
-    const logoutCancel = useCallback(
-        (e) => {
-        e.preventDefault();
-            dispatch(logOut());
-        },
-        [dispatch]
-    );
+    const logoutCancel = () => {
+        const refreshToken = localStorage.getItem('token');
+        dispatch(logOut(refreshToken));
+    };
 
     //Сохранение
     const submitHandler = (e) => {

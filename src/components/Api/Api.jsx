@@ -8,12 +8,14 @@ const api = {
 };
 
 //Вспомогательная функция ответа
-const parseResponse = (res) => {
-    if (res.ok) {
-        return res.json();
-    }
-    return Promise.reject(new Error(`Произошла ошибка со статус-кодом ${res.status}`));
-}
+// const parseResponse = (res) => {
+//     if (res.ok) {
+//         return res.json();
+//     }
+//     return Promise.reject(new Error(`Произошла ошибка со статус-кодом ${res.status}`));
+// }
+
+const parseResponse = (res) => (res.ok ? res.json() : res.json().then((err) => Promise.reject(err)));
 
 //Запрос данных с сервера
 const getData = () => {
@@ -93,12 +95,12 @@ const userUpdate = (name, email, password) => {
 }
 
 //Запрос для выхода из системы ()
-const logout = () => {
+const logout = (refreshToken) => {
     return fetch(`${api.url}/auth/logout`, {
         method: 'POST',
         headers: api.headers,
         body: JSON.stringify({
-            token: localStorage.getItem('token')
+            token: refreshToken
         })
     })
         .then(res => parseResponse(res))

@@ -131,21 +131,22 @@ export function updateUserInfo(name, email, password) {
 }
 
 //Выход из системы
-export function logOut () {
+export function logOut (refreshToken) {
     return function (dispatch) {
         dispatch({
             type: LOGOUT_REQUEST,
         });
-        logout()
+        logout(refreshToken)
             .then(() => {
-                deleteCookie('token')
+                console.log('logout')
+                deleteCookie('token');
                 localStorage.removeItem('token');
                 dispatch({
                     type: LOGOUT_SUCCESS,
-                    payload: null
                 });
             })
-            .catch((err) => {
+            .catch(() => {
+                console.log('logoutFail')
                 dispatch({
                     type: LOGOUT_FAILED,
                 });
