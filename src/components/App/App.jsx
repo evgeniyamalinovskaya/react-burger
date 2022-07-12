@@ -22,6 +22,7 @@ import { NotFound404 } from "../../pages/notFound404/notFound404";
 import {getUserInfo, token} from "../../services/actions/registration";
 import { getCookie } from '../../utils/cookie'
 import ProtectedRoute from '../../pages/protectedRoute/protectedRoure';
+import { Feed } from '../../pages/feed/feed';
 
 const App = () => {
     //Стор состояния в компонентах
@@ -83,6 +84,9 @@ const App = () => {
                    <Route exact path='/login' >
                       <Login />
                    </Route>
+                    <Route exact path="/feed">
+                       <Feed />
+                    </Route>
                    <Route exact path='/register'>
                       <Register />
                    </Route>

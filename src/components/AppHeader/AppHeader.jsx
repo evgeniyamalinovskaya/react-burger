@@ -18,7 +18,7 @@ const AppHeader = () => {
                         </li>
                         <li className={`${appHeaderStyles.listItem}  pr-5 pl-5 ml-2`}>
                             <NavLink className={`${appHeaderStyles.link} text text_type_main-default`}
-                                     activeClassName={appHeaderStyles.linkActive} to='/profile/orders'>
+                                     activeClassName={appHeaderStyles.linkActive} to='/feed'>
                                 <ListIcon type="primary" />
                                 <span className='ml-2'>Лента заказов</span>
                             </NavLink>
