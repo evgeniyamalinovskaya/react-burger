@@ -58,20 +58,19 @@ const BurgerIngredients = () => {
                     </Tab>
                 </a>
             </div>
-
             <div className={burgerIngredientsStyles.container}>
-                <a name='bun'>
+                {/*<a name={'bun'}>*/}
                     <IngredientsCategory
                         categories={buns} type={Product.Bun} ref={bunRef}/>
-                </a>
-                <a name='sauce'>
+                {/*</a>*/}
+                {/*<a name={'sauce'}>*/}
                     <IngredientsCategory
                         categories={sauces} type={Product.Sauce} ref={sauceRef}/>
-                </a>
-                <a name='main'>
+                {/*</a>*/}
+                {/*<a name={'main'}>*/}
                     <IngredientsCategory
                         categories={mains} type={Product.Main} ref={mainRef}/>
-                </a>
+                {/*</a>*/}
             </div>
         </div>
     )
