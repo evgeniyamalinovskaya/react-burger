@@ -16,6 +16,7 @@ import {
     WS_USER_CONNECTION_ERROR,
     WS_USER_GET_MESSAGE
 } from './actions/wsUser';
+
 import { rootReducer} from './reducers';
 import { socketMiddleware } from './socketMiddleware/socketMiddleware';
 import thunk from 'redux-thunk';
@@ -23,7 +24,6 @@ import thunk from 'redux-thunk';
 //Чтобы подключиться к бэкенду для получения всех заказов, используйте URL
 const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 const wsUserUrl = 'wss://norma.nomoreparties.space/orders';
-
 //Словарь типов экшенов
 const wsActions = {
     wsInit: WS_CONNECTION_START,
@@ -49,4 +49,4 @@ const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_E
 // const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 // Инициализируем хранилище с помощью корневого редьюсера (передаем socketMiddleware и url подключения и словарь типов экшенов, которые будут вызываться на разные события в Websocket.)
-export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions, false), socketMiddleware(wsUserUrl, wsUserActions, true) )));
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions), socketMiddleware(wsUserUrl, wsUserActions))));

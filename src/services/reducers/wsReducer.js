@@ -2,7 +2,7 @@ import {
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
-    WS_GET_MESSAGE,
+    WS_GET_MESSAGE
 } from '../actions/wsActionTypes';
 
 const initialState = {

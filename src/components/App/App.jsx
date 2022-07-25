@@ -112,9 +112,9 @@ const App = () => {
                     <Route path='/profile/orders'>
                         <OrderIngredient  />
                     </Route>
-                    {/*<Route path='/profile/orders/:id'>*/}
-                    {/*    <OrderIngredient  />*/}
-                    {/*</Route>*/}
+                    <Route path='/profile/orders/:id'>
+                        <OrderIngredient  />
+                    </Route>
                     <Route>
                         <NotFound404 />
                     </Route>

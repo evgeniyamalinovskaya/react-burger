@@ -5,7 +5,6 @@ import { orderReducer } from './order';
 import { detailsReducer } from './ingredient';
 import { registration } from './registration';
 import { wsReducer } from './wsReducer';
-import {wsUserReducer} from './wsUserReducer';
 
 // Корневой редьюсер, который обрабатывает экшены
 export const rootReducer = combineReducers({
@@ -14,6 +13,5 @@ export const rootReducer = combineReducers({
     ingredient: detailsReducer,
     order: orderReducer,
     user: registration,
-    wsOrders: wsReducer,
-    wsUserOrders: wsUserReducer
+    wsOrders: wsReducer
 });
