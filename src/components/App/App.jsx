@@ -49,6 +49,10 @@ const App = () => {
         history.replace('/');
         };
 
+    const closeModal = () => {
+        history.goBack();
+    };
+
     const openOrderDetailsModal = () => {
         if (!user) {
             history.replace('/login')
@@ -130,23 +134,19 @@ const App = () => {
                     </Modal>
                 </Route>
 
-                <Route
-                    path='/feed/:id'>
-                    <Modal onClose={handleClose}>
-                        <OrderIngredient  />
+                <Route path='/feed/:id'>
+                    <Modal title=''
+                        onClose={closeModal}>
+                        <OrderIngredient />
                     </Modal>
                 </Route>
 
                 <Route path='/profile/orders/:id'>
-                    <Modal onClose={handleClose}>
-                    <OrderIngredient  />
+                    <Modal title=''
+                        onClose={closeModal}>
+                    <OrderIngredient />
                     </Modal>
                 </Route>
-                    <Route path='/profile/orders'>
-                        <Modal onClose={handleClose}>
-                        <OrderIngredient  />
-                        </Modal>
-                    </Route>
                 </>
             )}
 

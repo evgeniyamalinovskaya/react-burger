@@ -24,6 +24,7 @@ import thunk from 'redux-thunk';
 //Чтобы подключиться к бэкенду для получения всех заказов, используйте URL
 const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 const wsUserUrl = 'wss://norma.nomoreparties.space/orders';
+
 //Словарь типов экшенов
 const wsActions = {
     wsInit: WS_CONNECTION_START,

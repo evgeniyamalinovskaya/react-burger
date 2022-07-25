@@ -5,7 +5,7 @@ import { Orders } from '../orders/orders';
 import { OrdersInformation } from '../orderInformation/orderInformation';
 import {
     wsConnectionOpen,
-    wsConnectionClosed,
+    wsConnectionClosed
 } from '../../services/actions/wsActionTypes'
 
 export const Feed = () => {
@@ -17,6 +17,7 @@ export const Feed = () => {
             dispatch(wsConnectionClosed())
         }
     }, [dispatch])
+
 
     return (
         <section className={feedStyles.section}>

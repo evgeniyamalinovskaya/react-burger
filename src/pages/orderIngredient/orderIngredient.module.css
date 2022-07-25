@@ -6,10 +6,14 @@
     max-width: 640px;
     position: relative;
     z-index: 10;
-}
-.number {
     align-self: center;
 }
+
+.number {
+    align-self: center;
+    padding-top: 40px;
+}
+
 .status {
     color: #00CCCC;
 }
