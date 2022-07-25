@@ -27,16 +27,17 @@ export const wsConnectionError = () => {
 }
 
 //при закрытии соединения
-export const wsConnectionClosed  = () => {
+export const wsConnectionClosed = () => {
     return {
         type: WS_CONNECTION_CLOSED
     }
 }
 
 //при получении сообщения от сервера
-export const wsGetMessage = () => {
+export const wsGetMessage = (order) => {
     return {
-        type: WS_GET_MESSAGE
+        type: WS_GET_MESSAGE,
+        payload: order
     }
 }
 
@@ -46,3 +47,6 @@ export const wsSendMessage = () => {
         type: WS_SEND_MESSAGE
     }
 }
+
+
+

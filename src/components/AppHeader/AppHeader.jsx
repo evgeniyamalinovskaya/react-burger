@@ -24,7 +24,9 @@ const AppHeader = () => {
                             </NavLink>
                         </li>
                     </menu>
-                    <Logo />
+                    <NavLink exact to="/" >
+                        <Logo />
+                    </NavLink>
                 </div>
                 <div className='pr-5 pl-5'>
                     <NavLink className={`${appHeaderStyles.link} text text_type_main-default`}

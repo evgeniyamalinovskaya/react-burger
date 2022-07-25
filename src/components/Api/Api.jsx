@@ -27,11 +27,14 @@ const getData = () => {
 };
 
 //Отправка данных заказа
-const setData = (productsIds) => {
+const setData = (order) => {
     return fetch(`${api.url}/orders`, {
-        headers: api.headers,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + getCookie('token')
+        },
         method: 'POST',
-        body: JSON.stringify({ingredients: productsIds})
+        body: JSON.stringify({ingredients: order})
     })
         .then(res => parseResponse(res))
 };
@@ -122,7 +125,6 @@ const freshToken = () => {
         .then(res => parseResponse(res))
 }
 
-
 //Запрос на восстановление пароля пользователя (готово)
 const recoveryPassword = (email) => {
     return fetch(`${api.url}/password-reset`, {
@@ -148,6 +150,5 @@ const updatePassword = (token, password) => {
         .then(res => parseResponse(res))
 }
 
-//
 
 export { getData, setData, authorization, registerUser, userData, userUpdate, logout, freshToken, recoveryPassword, updatePassword }
