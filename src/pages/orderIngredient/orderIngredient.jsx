@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams, useRouteMatch, useLocation   } from 'react-router-dom';
+import { useParams, useRouteMatch } from 'react-router-dom';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import orderIngredientStyle from './orderIngredient.module.css';
 import {formatRelative, parseISO} from "date-fns";
 import {ru} from "date-fns/locale";
+import {WS_USER_CONNECTION_CLOSED, WS_USER_CONNECTION_START} from "../../services/actions/wsUser";
+import { useHistory } from 'react-router-dom';
 
 //Один заказ
 export const OrderIngredient = () => {
@@ -29,6 +31,28 @@ export const OrderIngredient = () => {
     const formatDate = (date) => {
         return formatRelative(parseISO(date), new Date(date), {locale: ru});
     }
+    const dispatch = useDispatch()
+
+    let match = useRouteMatch();
+    const history = useHistory();
+    const isProfile = '/profile/orders/:id';
+    const isFeed = '/feed/:id';
+    const user = useSelector(store => store.user.user);
+    const allOrders = useSelector(store => store.wsOrders.orders);
+    const userOrders = useSelector(store => store.wsUser.orders);
+
+    let userData = match.path === isProfile ? userOrders : allOrders;
+
+    let orderData = userData.find((el) => el._id === id);
+    useEffect(() => {
+        if (!orderData) {
+        dispatch({ type: WS_USER_CONNECTION_START, payload: '/all' })
+        }
+        return () => {
+            dispatch({ type: WS_USER_CONNECTION_CLOSED })
+        }
+    }, [dispatch])
+
 
     return (
         <>

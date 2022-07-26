@@ -1,13 +1,20 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState} from "react";
+import { NavLink, Route, Switch } from "react-router-dom";
 import profileStyles from './profile.module.css';
 import { Button, Input, EmailInput, PasswordInput, } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from 'react-redux';
 import {getUserInfo, logOut, updateUserInfo} from '../../services/actions/registration';
+import { OrdersHistory } from "../ordersHistory/ordersHistory";
+import {wsUserOrdersConnectionClosed, wsUserOrdersConnectionStart} from "../../services/actions/wsUser";
+import { useLocation } from "react-router-dom";
+import {OrderIngredient} from "../orderIngredient/orderIngredient";
 
 export const Profile = () => {
-    const user = useSelector(store => store.user.user);
+    const location = useLocation();
+    const background = location.state?.background;
     const dispatch = useDispatch();
+    const user = useSelector(store => store.user.user);
+
     //Инициализируем хук useRef начальное значение
     const nameRef = React.useRef(null);
     const loginRef = React.useRef(null);
@@ -59,7 +66,12 @@ export const Profile = () => {
 
     React.useEffect(() => {
         dispatch(getUserInfo());
+        dispatch(wsUserOrdersConnectionStart());
+        return () => {
+            dispatch(wsUserOrdersConnectionClosed());
+        };
     }, [dispatch])
+
 
     return (
     <main className={profileStyles.wrapper}>
@@ -75,7 +87,7 @@ export const Profile = () => {
                 <li>
                     <NavLink
                         activeClassName={profileStyles.linkActive}
-                        className={`${profileStyles.link} text text_type_main-medium`} to='/profile/orders'>
+                        className={`${profileStyles.link} text text_type_main-medium`} exact to='/profile/orders'>
                         <span className="text text_type_main-medium">История заказов</span>
                     </NavLink>
                 </li>
@@ -91,6 +103,16 @@ export const Profile = () => {
                 В этом разделе вы можете изменить свои персональные данные
             </p>
         </nav>
+        <Switch location={background || location}>
+            <Route exact path='/profile/orders'>
+                <OrdersHistory />
+            </Route>
+            <Route path='/profile/orders/:id'>
+                <div>
+                    <OrderIngredient />
+                </div>
+            </Route>
+        <Route exact path='/profile'>
         <form className={profileStyles.form} name="register" onSubmit={submitHandler}>
             <Input
                 type="text"
@@ -135,6 +157,8 @@ export const Profile = () => {
                 <Button disabled={!(nameForm && loginForm && passwordForm)} type="primary" size="medium">Сохранить</Button>
             </div>
         </form>
+        </Route>
+        </Switch>
     </main>
     )
 }

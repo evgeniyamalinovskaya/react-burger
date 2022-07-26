@@ -141,7 +141,7 @@ const App = () => {
                     </Modal>
                 </Route>
 
-                <Route path='/profile/orders/:id'>
+                <Route path='/profile/orders/:id' exact={true}>
                     <Modal title=''
                         onClose={closeModal}>
                     <OrderIngredient />
