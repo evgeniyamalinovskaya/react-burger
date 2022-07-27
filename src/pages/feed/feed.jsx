@@ -3,10 +3,7 @@ import { useDispatch } from 'react-redux'
 import feedStyles from './feed.module.css';
 import { Orders } from '../orders/orders';
 import { OrdersInformation } from '../orderInformation/orderInformation';
-import {
-    wsConnectionOpen,
-    wsConnectionClosed
-} from '../../services/actions/wsActionTypes'
+import { wsConnectionOpen, wsConnectionClosed } from '../../services/actions/wsActionTypes';
 
 export const Feed = () => {
     const dispatch = useDispatch()
@@ -17,7 +14,6 @@ export const Feed = () => {
             dispatch(wsConnectionClosed())
         }
     }, [dispatch])
-
 
     return (
         <section className={feedStyles.section}>

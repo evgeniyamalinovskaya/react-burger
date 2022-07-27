@@ -2,19 +2,18 @@ import React from "react";
 import {useSelector} from "react-redux";
 import PropTypes from "prop-types";
 import { useMemo } from 'react';
-import {formatRelative, parseISO} from "date-fns";
-import {ru} from "date-fns/locale";
 import informationStyles from './information.module.css';
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
-export const Information = ({status, orderNumber, orderTime, orderBurgerName, ingredients}) => {
+export const Information = ({status, orderNumber, createdAt, orderBurgerName, ingredients}) => {
     const allIngredients = useSelector(store => store.burgerIngredients.ingredients);
+
     //Изменение даты
-    const formatDate = (date) => {
-        return formatRelative(parseISO(date), new Date(date), {locale: ru});
+    const formatDate = (string) => {
+        return new Date(string).toLocaleString();
     }
     const numbersHidden  = ingredients.length;
-    const hiddenIngredient = numbersHidden  - 6;
+    const hiddenIngredient = numbersHidden - 6;
 
     const ingredientsDataArray = useMemo(() => {
         return ingredients.map((ingredientInOrder) => {
@@ -33,20 +32,17 @@ export const Information = ({status, orderNumber, orderTime, orderBurgerName, in
         const ingredient = allIngredients.find((item) => {
             return currentItem === item._id;
         });
-
         if (!ingredient) {
             return previousValue;
         }
-
         return previousValue + ingredient.price;
-
     }, 0);
 
     return (
         <section className={`pt-6 pr-6 pl-6 pb-6 mb-6 ${informationStyles.section}`}>
             <div className={informationStyles.header}>
                 <p className="text text_type_digits-default">#{orderNumber}</p>
-                <p className="text text_type_main-default text_color_inactive">{formatDate(orderTime)}</p>
+                <p className="text text_type_main-default text_color_inactive">{formatDate(createdAt)}</p>
             </div>
             <div>
                 <h3 className="text text_type_main-medium">{orderBurgerName}</h3>
@@ -68,10 +64,10 @@ export const Information = ({status, orderNumber, orderTime, orderBurgerName, in
                     })
                     }
                     {allIngredients.length && ingredients.length && numbersHidden >= 6 &&
-                    ingredientData.slice(0, 5).map((ing, index) => {
+                    ingredientData.slice(0, 5).map((el, index) => {
                         return (
                             <li className={informationStyles.ingredient} key={index}>
-                                <Ingredient ingredientImage={ing.image} ingredientName={ing.name} />
+                                <Ingredient ingredientImage={el.image} ingredientName={el.name} />
                             </li>
                         )
                     })
@@ -80,9 +76,9 @@ export const Information = ({status, orderNumber, orderTime, orderBurgerName, in
                         <li className={informationStyles.ingredient}>
                             <p className={`text text_type_main-default ${informationStyles.add_qty}`}>{`+${hiddenIngredient}`}</p>
                             <div className={informationStyles.length}>
-                                {ingredientData.slice(5, 6).map((ing, index) => {
+                                {ingredientData.slice(5, 6).map((el, index) => {
                                     return (
-                                        <Ingredient ingredientImage={ing.image} ingredientName={ing.name} key={index} />
+                                        <Ingredient ingredientImage={el.image} ingredientName={el.name} key={index} />
                                     )
                                 })
                                 }
@@ -119,7 +115,7 @@ Ingredient.propTypes = {
 Information.propTypes = {
     status: PropTypes.string.isRequired,
     orderNumber: PropTypes.number.isRequired,
-    orderTime: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
     orderBurgerName: PropTypes.string.isRequired,
     ingredients: PropTypes.array.isRequired,
 }

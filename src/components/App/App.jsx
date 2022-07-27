@@ -24,6 +24,8 @@ import { getCookie } from '../../utils/cookie'
 import ProtectedRoute from '../../pages/protectedRoute/protectedRoure';
 import { Feed } from '../../pages/feed/feed';
 import { OrderIngredient } from '../../pages/orderIngredient/orderIngredient';
+import {MyOrders} from "../../pages/myorders/myOrders";
+import {OrderIngredientId} from '../../pages/idOrderIngredient/orderIngredientId';
 
 const App = () => {
     //Стор состояния в компонентах
@@ -48,10 +50,6 @@ const App = () => {
         dispatch(closeOrderModal());
         history.replace('/');
         };
-
-    const closeModal = () => {
-        history.goBack();
-    };
 
     const openOrderDetailsModal = () => {
         if (!user) {
@@ -109,22 +107,20 @@ const App = () => {
                         path='/ingredients/:id'>
                         <IngredientDetails />
                     </Route>
-                    <Route
-                        path='/feed/:id'>
-                        <OrderIngredient />
+                    <Route exact path='/feed/:id'>
+                        <OrderIngredientId />
                     </Route>
-                    <Route path='/profile/orders'>
-                        <OrderIngredient  />
+                    <Route exact path='/profile/orders'>
+                        <MyOrders />
                     </Route>
-                    <Route path='/profile/orders/:id'>
-                        <OrderIngredient  />
+                    <Route exact path='/profile/orders/:id'>
+                        <OrderIngredientId  />
                     </Route>
                     <Route>
                         <NotFound404 />
                     </Route>
                     />
                 </Switch>
-
             {background && (
                 <>
                 <Route
@@ -134,16 +130,17 @@ const App = () => {
                     </Modal>
                 </Route>
 
-                <Route path='/feed/:id'>
-                    <Modal title=''
-                        onClose={closeModal}>
+                <Route
+                    path='/feed/:id'>
+                    <Modal title='' onClose={handleClose}>
                         <OrderIngredient />
                     </Modal>
                 </Route>
 
-                <Route path='/profile/orders/:id' exact={true}>
+                <Route
+                    path='/profile/orders/:id'>
                     <Modal title=''
-                        onClose={closeModal}>
+                           onClose={handleClose}>
                     <OrderIngredient />
                     </Modal>
                 </Route>

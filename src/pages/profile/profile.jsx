@@ -1,17 +1,12 @@
-import React, { useState} from "react";
-import { NavLink, Route, Switch } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import { NavLink } from "react-router-dom";
 import profileStyles from './profile.module.css';
 import { Button, Input, EmailInput, PasswordInput, } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from 'react-redux';
-import {getUserInfo, logOut, updateUserInfo} from '../../services/actions/registration';
-import { OrdersHistory } from "../ordersHistory/ordersHistory";
-import {wsUserOrdersConnectionClosed, wsUserOrdersConnectionStart} from "../../services/actions/wsUser";
-import { useLocation } from "react-router-dom";
-import {OrderIngredient} from "../orderIngredient/orderIngredient";
+import { logOut, updateUserInfo} from '../../services/actions/registration';
+import {wsUserConnectionClosed, wsUserConnectionStart} from "../../services/actions/wsUser";
 
 export const Profile = () => {
-    const location = useLocation();
-    const background = location.state?.background;
     const dispatch = useDispatch();
     const user = useSelector(store => store.user.user);
 
@@ -64,12 +59,11 @@ export const Profile = () => {
         setPasswordForm('')
     }
 
-    React.useEffect(() => {
-        dispatch(getUserInfo());
-        dispatch(wsUserOrdersConnectionStart());
+    useEffect(() => {
+        dispatch(wsUserConnectionStart())
         return () => {
-            dispatch(wsUserOrdersConnectionClosed());
-        };
+            dispatch(wsUserConnectionClosed())
+        }
     }, [dispatch])
 
 
@@ -94,25 +88,16 @@ export const Profile = () => {
                 <li>
                     <NavLink
                         activeClassName={profileStyles.linkActive}
-                        className={`${profileStyles.link} text text_type_main-medium`} to='/login' onClick={logoutCancel} >
+                        className={`${profileStyles.link} text text_type_main-medium`} exact to='/login'
+                        onClick={logoutCancel}>
                         <span className="text text_type_main-medium">Выход</span>
                     </NavLink>
                 </li>
             </ul>
-            <p className={`${profileStyles.text} text text_type_main-default text_color_inactive`}>
-                В этом разделе вы можете изменить свои персональные данные
-            </p>
+                <p className={`${profileStyles.text} text text_type_main-default text_color_inactive`}>
+                    В этом разделе вы можете изменить свои персональные данные
+                </p>
         </nav>
-        <Switch location={background || location}>
-            <Route exact path='/profile/orders'>
-                <OrdersHistory />
-            </Route>
-            <Route path='/profile/orders/:id'>
-                <div>
-                    <OrderIngredient />
-                </div>
-            </Route>
-        <Route exact path='/profile'>
         <form className={profileStyles.form} name="register" onSubmit={submitHandler}>
             <Input
                 type="text"
@@ -157,8 +142,6 @@ export const Profile = () => {
                 <Button disabled={!(nameForm && loginForm && passwordForm)} type="primary" size="medium">Сохранить</Button>
             </div>
         </form>
-        </Route>
-        </Switch>
     </main>
     )
 }

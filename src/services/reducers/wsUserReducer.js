@@ -29,7 +29,7 @@ export const wsUserReducer = (state = initialState, action) => {
         case WS_USER_CONNECTION_CLOSED:
             return {
                 ...state,
-                wsConnected: false
+                wsConnected: false,
             };
 
         case WS_USER_GET_MESSAGE:
@@ -42,4 +42,4 @@ export const wsUserReducer = (state = initialState, action) => {
         default:
             return state;
     }
-};
+}

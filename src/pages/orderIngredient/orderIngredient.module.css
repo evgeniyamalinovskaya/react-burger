@@ -1,5 +1,5 @@
 .page {
-    margin: 0;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     min-height: 400px;
@@ -11,8 +11,7 @@
 }
 
 .number {
-    align-self: center;
-    padding-top: 40px;
+    text-align: center;
 }
 
 .status {
@@ -22,6 +21,7 @@
     display: flex;
     width: 100%;
     gap: 8px;
+
 }
 
 .section {
@@ -48,6 +48,18 @@
     background-color: #2F2F37;
 }
 
+.currency {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.currency_container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
 .item {
     margin-top: 40px;
     display: flex;
@@ -71,6 +83,9 @@
 .info {
     display: flex;
     align-items: center;
+    gap: 16px;
+    max-width: 640px;
+    justify-content: space-between;
 }
 
 .border {
@@ -90,9 +105,14 @@
 }
 
 .name {
-    max-width: 320px;
+    max-width: 414px;
+    margin: 0;
 }
 
-
+.item_container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
 

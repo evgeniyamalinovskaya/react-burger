@@ -1,39 +1,49 @@
+import {getCookie} from "../../utils/cookie";
+
 export const socketMiddleware = (wsUrl, wsActions) => {
     return store => {
         let socket = null;
 
         return next => action => {
-            const { dispatch } = store;
-            const { type, payload } = action;
-            const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+            const {dispatch} = store;
+            const {type, payload} = action;
+            const {wsInit, wsInitMyOrders, wsSendMessage, onOpen, onClose, onError, onMessage} = wsActions;
 
-            if (type === wsInit) {
+            if (type === wsInitMyOrders) {
+                const token = getCookie('token')
+                if (token) {
+                    console.log('Socket with my orders create')
+                    socket = new WebSocket(`${wsUrl}?token=${token}`);
+                }
+            } else if (type === wsInit) {
+                console.log('Socket with all orders create')
                 socket = new WebSocket(wsUrl);
             }
+
             //открытие
             if (socket) {
                 socket.onopen = event => {
-                    dispatch({ type: onOpen, payload: event });
+                    dispatch({type: onOpen, payload: event});
                 };
-            //ошибка
+                //ошибка
                 socket.onerror = event => {
-                    dispatch({ type: onError, payload: event });
+                    dispatch({type: onError, payload: event});
                 };
-            //сообщение
+                //сообщение
                 socket.onmessage = event => {
-                    const { data } = event;
+                    const {data} = event;
                     const parsedData = JSON.parse(data);
-                    const { success, ...restParsedData } = parsedData;
+                    const {success, ...restParsedData} = parsedData;
 
-                    dispatch({ type: onMessage, payload: restParsedData });
+                    dispatch({type: onMessage, payload: restParsedData});
                 };
-            //закрытие
+                //закрытие
                 socket.onclose = event => {
-                    dispatch({ type: onClose, payload: event });
+                    dispatch({type: onClose, payload: event});
                 };
 
                 if (type === wsSendMessage) {
-                    const orders = { ...payload };
+                    const orders = {...payload};
                     socket.send(JSON.stringify(orders));
                 }
             }

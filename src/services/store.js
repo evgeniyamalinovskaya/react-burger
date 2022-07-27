@@ -1,4 +1,4 @@
-import { compose, createStore, applyMiddleware } from 'redux';
+import {compose, createStore, applyMiddleware} from 'redux';
 import {
     WS_CONNECTION_CLOSED,
     WS_CONNECTION_ERROR,
@@ -17,8 +17,8 @@ import {
     WS_USER_GET_MESSAGE
 } from './actions/wsUser';
 
-import { rootReducer} from './reducers';
-import { socketMiddleware } from './socketMiddleware/socketMiddleware';
+import {rootReducer} from './reducers';
+import {socketMiddleware} from './socketMiddleware/socketMiddleware';
 import thunk from 'redux-thunk';
 
 //Чтобы подключиться к бэкенду для получения всех заказов, используйте URL
@@ -35,7 +35,7 @@ const wsActions = {
     onMessage: WS_GET_MESSAGE
 };
 const wsUserActions = {
-    wsInit: WS_USER_CONNECTION_START,
+    wsInitMyOrders: WS_USER_CONNECTION_START,
     wsSendMessage: WS_USER_SEND_MESSAGE,
     onOpen: WS_USER_CONNECTION_SUCCESS,
     onClose: WS_USER_CONNECTION_CLOSED,
