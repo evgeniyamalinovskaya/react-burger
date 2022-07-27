@@ -110,12 +110,12 @@ const App = () => {
                     <Route exact path='/feed/:id'>
                         <OrderIngredientId />
                     </Route>
-                    <Route exact path='/profile/orders'>
+                    <ProtectedRoute exact path='/profile/orders'>
                         <MyOrders />
-                    </Route>
-                    <Route exact path='/profile/orders/:id'>
+                    </ProtectedRoute >
+                    <ProtectedRoute exact path='/profile/orders/:id'>
                         <OrderIngredientId  />
-                    </Route>
+                    </ProtectedRoute >
                     <Route>
                         <NotFound404 />
                     </Route>
