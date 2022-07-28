@@ -111,7 +111,7 @@ export const Profile = () => {
                 error={false}
                 errorText="Ошибка"
             />
-            <EmailInput
+            <Input
                 type="email"
                 placeholder="Логин"
                 name="login"
@@ -124,7 +124,7 @@ export const Profile = () => {
                 error={false}
                 errorText="Ошибка"
             />
-            <PasswordInput
+            <Input
                 type="password"
                 placeholder="Пароль"
                 name="password"

@@ -48,7 +48,7 @@ const App = () => {
     // Закрываем модальные окна
     const handleClose = () => {
         dispatch(closeOrderModal());
-        history.replace('/');
+        history.goBack();
         };
 
     const openOrderDetailsModal = () => {
@@ -112,10 +112,10 @@ const App = () => {
                     </Route>
                     <ProtectedRoute exact path='/profile/orders'>
                         <MyOrders />
-                    </ProtectedRoute >
-                    <ProtectedRoute exact path='/profile/orders/:id'>
-                        <OrderIngredientId  />
-                    </ProtectedRoute >
+                    </ProtectedRoute>
+                    <Route exact path='/profile/orders/:id'>
+                        <OrderIngredientId />
+                    </Route>
                     <Route>
                         <NotFound404 />
                     </Route>
@@ -139,9 +139,8 @@ const App = () => {
 
                 <Route
                     path='/profile/orders/:id'>
-                    <Modal title=''
-                           onClose={handleClose}>
-                    <OrderIngredient />
+                    <Modal title='' onClose={handleClose}>
+                        <OrderIngredient />
                     </Modal>
                 </Route>
                 </>
@@ -157,5 +156,4 @@ const App = () => {
         </div>
     )
 }
-
 export default App;

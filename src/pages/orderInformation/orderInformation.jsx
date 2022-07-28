@@ -1,20 +1,21 @@
 import React from 'react';
-import {Link, useLocation, useRouteMatch} from 'react-router-dom'
-import orderInformationStyles from './orderInformation.module.css';
 import {useSelector} from "react-redux";
-import { Information } from '../Information/information';
+import {Link, useLocation, useRouteMatch} from 'react-router-dom'
+import {Information} from '../Information/information';
+import orderInformationStyles from './orderInformation.module.css';
 
+// Список заказов
 export const OrdersInformation = () => {
     const location = useLocation();
-
     let match = useRouteMatch();
     const profilePath = '/profile/orders';
 
     const allOrders = useSelector(store => store.wsOrders.orders);
-    const myOrders = useSelector(store => store.wsUser.orders);
-    myOrders.reverse();
-    let isProfile = match.path === profilePath;
+    const myOrders = useSelector(store => store.wsUser.orders).slice();
 
+    myOrders.reverse();
+
+    let isProfile = match.path === profilePath;
     let orders = isProfile ? myOrders : allOrders;
     let startPath = isProfile ? '/profile/orders/' : '/feed/';
 
@@ -25,7 +26,8 @@ export const OrdersInformation = () => {
                     <Link className={orderInformationStyles.link} key={order._id}
                           to={{
                               pathname: startPath + `${order._id}`,
-                              state: { background: location }}}>
+                              state: {background: location}
+                          }}>
 
                         {isProfile === true &&
                         <Information

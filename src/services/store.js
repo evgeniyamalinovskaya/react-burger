@@ -35,7 +35,7 @@ const wsActions = {
     onMessage: WS_GET_MESSAGE
 };
 const wsUserActions = {
-    wsInitMyOrders: WS_USER_CONNECTION_START,
+    wsInitWithToken: WS_USER_CONNECTION_START,
     wsSendMessage: WS_USER_SEND_MESSAGE,
     onOpen: WS_USER_CONNECTION_SUCCESS,
     onClose: WS_USER_CONNECTION_CLOSED,

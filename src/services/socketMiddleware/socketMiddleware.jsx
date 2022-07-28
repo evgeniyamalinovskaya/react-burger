@@ -7,9 +7,9 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         return next => action => {
             const {dispatch} = store;
             const {type, payload} = action;
-            const {wsInit, wsInitMyOrders, wsSendMessage, onOpen, onClose, onError, onMessage} = wsActions;
+            const {wsInit, wsInitWithToken, wsSendMessage, onOpen, onClose, onError, onMessage} = wsActions;
 
-            if (type === wsInitMyOrders) {
+            if (type === wsInitWithToken) {
                 const token = getCookie('token')
                 if (token) {
                     console.log('Socket with my orders create')
