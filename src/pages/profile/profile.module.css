@@ -2,8 +2,8 @@
     display: flex;
     justify-content: center;
     max-width: 1920px;
-    margin: 0 auto;
-    padding: 120px 0 0 0;
+    margin: 120px auto 0 auto;
+    padding-right: 380px;
 }
 
 .navigation {

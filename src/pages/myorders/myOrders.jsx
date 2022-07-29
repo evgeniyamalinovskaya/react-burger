@@ -26,7 +26,7 @@ export const MyOrders = () => {
     };
 
     return (
-        <main className={profileStyles.wrapper}>
+        <main className={myOrdersStyles.page}>
             <nav className={profileStyles.navigation}>
                 <ul className={profileStyles.list}>
                     <li>
