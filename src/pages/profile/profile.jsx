@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { NavLink } from "react-router-dom";
 import profileStyles from './profile.module.css';
 import { Button, Input, EmailInput, PasswordInput, } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from 'react-redux';
-import {getUserInfo, logOut, updateUserInfo} from '../../services/actions/registration';
+import { logOut, updateUserInfo} from '../../services/actions/registration';
+import {wsUserConnectionClosed, wsUserConnectionStart} from "../../services/actions/wsUser";
 
 export const Profile = () => {
-    const user = useSelector(store => store.user.user);
     const dispatch = useDispatch();
+    const user = useSelector(store => store.user.user);
+
     //Инициализируем хук useRef начальное значение
     const nameRef = React.useRef(null);
     const loginRef = React.useRef(null);
@@ -57,9 +59,13 @@ export const Profile = () => {
         setPasswordForm('')
     }
 
-    React.useEffect(() => {
-        dispatch(getUserInfo());
+    useEffect(() => {
+        dispatch(wsUserConnectionStart())
+        return () => {
+            dispatch(wsUserConnectionClosed())
+        }
     }, [dispatch])
+
 
     return (
     <main className={profileStyles.wrapper}>
@@ -75,21 +81,22 @@ export const Profile = () => {
                 <li>
                     <NavLink
                         activeClassName={profileStyles.linkActive}
-                        className={`${profileStyles.link} text text_type_main-medium`} to='/profile/orders'>
+                        className={`${profileStyles.link} text text_type_main-medium`} exact to='/profile/orders'>
                         <span className="text text_type_main-medium">История заказов</span>
                     </NavLink>
                 </li>
                 <li>
                     <NavLink
                         activeClassName={profileStyles.linkActive}
-                        className={`${profileStyles.link} text text_type_main-medium`} to='/login' onClick={logoutCancel} >
+                        className={`${profileStyles.link} text text_type_main-medium`} exact to='/login'
+                        onClick={logoutCancel}>
                         <span className="text text_type_main-medium">Выход</span>
                     </NavLink>
                 </li>
             </ul>
-            <p className={`${profileStyles.text} text text_type_main-default text_color_inactive`}>
-                В этом разделе вы можете изменить свои персональные данные
-            </p>
+                <p className={`${profileStyles.text} text text_type_main-default text_color_inactive`}>
+                    В этом разделе вы можете изменить свои персональные данные
+                </p>
         </nav>
         <form className={profileStyles.form} name="register" onSubmit={submitHandler}>
             <Input
@@ -104,7 +111,7 @@ export const Profile = () => {
                 error={false}
                 errorText="Ошибка"
             />
-            <EmailInput
+            <Input
                 type="email"
                 placeholder="Логин"
                 name="login"
@@ -117,7 +124,7 @@ export const Profile = () => {
                 error={false}
                 errorText="Ошибка"
             />
-            <PasswordInput
+            <Input
                 type="password"
                 placeholder="Пароль"
                 name="password"

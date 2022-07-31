@@ -2,10 +2,8 @@ import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
-    OPEN_ORDER_MODAL,
     CLOSE_ORDER_MODAL,
 } from '../actions/order' ;
-import {CLOSE_INGREDIENT, OPEN_INGREDIENT} from "../actions/ingredient";
 
 // Исходное состояние
 const initialOrderState = {

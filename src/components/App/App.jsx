@@ -22,6 +22,10 @@ import { NotFound404 } from "../../pages/notFound404/notFound404";
 import {getUserInfo, token} from "../../services/actions/registration";
 import { getCookie } from '../../utils/cookie'
 import ProtectedRoute from '../../pages/protectedRoute/protectedRoure';
+import { Feed } from '../../pages/feed/feed';
+import { OrderIngredient } from '../../pages/orderIngredient/orderIngredient';
+import {MyOrders} from "../../pages/myorders/myOrders";
+import {OrderIngredientId} from '../../pages/idOrderIngredient/orderIngredientId';
 
 const App = () => {
     //Стор состояния в компонентах
@@ -44,7 +48,7 @@ const App = () => {
     // Закрываем модальные окна
     const handleClose = () => {
         dispatch(closeOrderModal());
-        history.replace('/');
+        history.goBack();
         };
 
     const openOrderDetailsModal = () => {
@@ -64,6 +68,7 @@ const App = () => {
             dispatch(getUserInfo());
         }
     }, [dispatch, refreshTokenData, user, cookie, tokenSuccess]);
+
 
     return (
         <div className={AppStyles.app}>
@@ -92,6 +97,9 @@ const App = () => {
                     <Route exact path='/reset-password'>
                         <ResetPassword />
                     </Route>
+                    <Route exact path='/feed'>
+                        <Feed />
+                    </Route>
                    <ProtectedRoute exact path='/profile'>
                       <Profile />
                    </ProtectedRoute>
@@ -99,20 +107,45 @@ const App = () => {
                         path='/ingredients/:id'>
                         <IngredientDetails />
                     </Route>
+                    <Route exact path='/feed/:id'>
+                        <OrderIngredientId />
+                    </Route>
+                    <ProtectedRoute exact path='/profile/orders'>
+                        <MyOrders />
+                    </ProtectedRoute>
+                    <Route exact path='/profile/orders/:id'>
+                        <OrderIngredientId />
+                    </Route>
                     <Route>
                         <NotFound404 />
                     </Route>
                     />
                 </Switch>
-
-            {background &&
+            {background && (
+                <>
                 <Route
                     path='/ingredients/:id'>
                     <Modal title="Детали ингредиента" onClose={handleClose}>
                         <IngredientDetails />
                     </Modal>
                 </Route>
-            }
+
+                <Route
+                    path='/feed/:id'>
+                    <Modal title='' onClose={handleClose}>
+                        <OrderIngredient />
+                    </Modal>
+                </Route>
+
+                <Route
+                    path='/profile/orders/:id'>
+                    <Modal title='' onClose={handleClose}>
+                        <OrderIngredient />
+                    </Modal>
+                </Route>
+                </>
+            )}
+
         </>
             {orderNumber &&  (
                 <Modal title="Детали заказа" onClose={handleClose}>
@@ -123,5 +156,4 @@ const App = () => {
         </div>
     )
 }
-
 export default App;

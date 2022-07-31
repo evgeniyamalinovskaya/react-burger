@@ -1,0 +1,29 @@
+.section {
+    display: grid;
+    column-gap: 60px;
+    grid-template-columns: minmax(max-content, max-content) minmax(max-content, max-content);
+    justify-content: center;
+    align-self: center;
+}
+
+.title {
+    width: 608px;
+}
+
+.container {
+    overflow-y: scroll;
+    max-height: 870px;
+    padding-right: 8px;
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    height: 492px;
+}
+
+.container::-webkit-scrollbar {
+    width: 8px;
+    background: #2F2F37;
+}
+
+

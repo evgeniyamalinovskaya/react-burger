@@ -15,6 +15,7 @@ const BurgerConstructor = () => {
     const user = useSelector(store => store.user.user);
     const bun = useSelector(store => store.burgerConstructor.bun);
     const productsIds = useSelector(store => store.burgerConstructor.productsIds);
+
     //Функция для использование подсчёта стоимости
     const price = useMemo(() => {
         return (
@@ -108,7 +109,7 @@ const BurgerConstructor = () => {
                     {price}
                     <CurrencyIcon type="primary"/>
                 </h3>
-                <Button type="primary" size="large" onClick={() => {orderModal(productsIds)}}>Оформить заказ</Button>
+                <Button type="primary" size="large" onClick={() => orderModal(productsIds)}>Оформить заказ</Button>
 
             </div>
         </div>
