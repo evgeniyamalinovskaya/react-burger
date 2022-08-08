@@ -19,9 +19,44 @@ import {
     UPDATE_USER_INFO_FAILED,
     GET_USER_INFO_REQUEST,
     GET_USER_INFO_SUCCESS,
-    GET_USER_INFO_FAILED, TOKEN_REQUEST, TOKEN_SUCCESS, TOKEN_FAILED
+    GET_USER_INFO_FAILED,
+    TOKEN_REQUEST,
+    TOKEN_SUCCESS,
+    TOKEN_FAILED, TUserActions
 } from "../actions/registration";
+import {TUser} from '../../utils/types';
 
+type TUserState = {
+    user: TUser | null;
+
+    registerRequest: boolean;
+    registerFailed: boolean;
+
+    loginRequest: boolean;
+    loginSuccess: boolean;
+    loginFailed: boolean;
+
+    logoutRequest: boolean;
+    logoutFailed: boolean;
+
+    forgotPasswordRequest: boolean;
+    forgotPasswordFailed: boolean;
+    forgotPasswordSuccess: boolean;
+
+    resetPasswordRequest: boolean;
+    resetPasswordSuccess: boolean;
+    resetPasswordFailed: boolean;
+
+    getUserRequest: boolean;
+    getUserFailed: boolean;
+
+    updateUserRequest: boolean;
+    updateUserFailed: boolean;
+
+    tokenRequest: boolean;
+    tokenSuccess: boolean;
+    tokenFailed: boolean
+}
 const initialState = {
     user: null,
 
@@ -54,7 +89,7 @@ const initialState = {
     tokenFailed: false,
 }
 
-export const registration = (state = initialState, action) => {
+export const registration = (state = initialState, action: TUserActions): TUserState  => {
     switch (action.type) {
         case AUTHORIZATION_REQUEST:
             return {
@@ -130,8 +165,8 @@ export const registration = (state = initialState, action) => {
         case UPDATE_USER_INFO_FAILED:
             return {
                 ...state,
-                updateUserInfoRequest: false,
-                updateUserInfoFailed: true
+                updateUserRequest: false,
+                updateUserFailed: true
             }
         case LOGOUT_REQUEST:
             return {

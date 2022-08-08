@@ -10,7 +10,7 @@ const initialConstructorState = {
 export const burgerConstructorReducer = (state = initialConstructorState, action) => {
     switch (action.type) {
         case ADD_BUN:
-            //если только бл
+            //если только булка
             if (action.item.type === 'bun') {
                 if (state.bun) {
                     return {

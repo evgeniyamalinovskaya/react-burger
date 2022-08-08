@@ -2,17 +2,24 @@ import {
     GET_ORDER_REQUEST,
     GET_ORDER_SUCCESS,
     GET_ORDER_FAILED,
-    CLOSE_ORDER_MODAL,
+    CLOSE_ORDER_MODAL, TGetOrderActions,
 } from '../actions/order' ;
 
+//Тип состояния
+type TOrderState = {
+    orderNumber: number | null;
+    orderRequest: boolean;
+    orderFailed: boolean;
+}
+
 // Исходное состояние
-const initialOrderState = {
+const initialOrderState: TOrderState = {
     orderNumber: null,
     orderRequest: false,
     orderFailed: false,
 };
 
-export const orderReducer = (state = initialOrderState, action) => {
+export const orderReducer = (state = initialOrderState, action: TGetOrderActions): TOrderState => {
     switch (action.type) {
         //Запрос на получение деталей ингредиентов
         case GET_ORDER_REQUEST: {
@@ -38,12 +45,10 @@ export const orderReducer = (state = initialOrderState, action) => {
                 orderFailed: true,
             };
         }
-
         case CLOSE_ORDER_MODAL: {
             return {
                 ...state,
                 orderNumber: null,
-
             };
         }
         default:

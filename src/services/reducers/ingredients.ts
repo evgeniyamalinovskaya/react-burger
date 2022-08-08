@@ -1,14 +1,24 @@
 import { GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED, GET_CURRENT_TAB} from '../actions/ingredients';
+import { TGetIngredientsActions } from '../actions/ingredients';
+import { TIngredient } from '../../utils/types';
+
+//Тип состояния
+type TIngredientsState = {
+    ingredients: ReadonlyArray<TIngredient>;
+    currentTab: any;
+    ingredientsRequest: boolean;
+    ingredientsFailed: boolean
+}
 
 // Исходное состояние
-const initialIngredients = {
+const initialIngredients: TIngredientsState = {
     ingredients: [],
     currentTab: "bun",
     ingredientsRequest: false,
     ingredientsFailed: false,
 };
 
-export const burgerIngredientsReducer = (state = initialIngredients, action) => {
+export const burgerIngredientsReducer = (state = initialIngredients, action: TGetIngredientsActions): TIngredientsState => {
     switch (action.type) {
         //Переключатель на таб
         case GET_CURRENT_TAB: {
