@@ -29,14 +29,3 @@ export const closeModalIngredient = (): ICloseOnIngredientModalAction => ({
     type: CLOSE_INGREDIENT,
 });
 
-
-
-//Cразу диспатчv в редьюсер открытие модалки и её закрытие
-// export const openIngredientCurrent = (ingredient) => ({
-//     type: OPEN_INGREDIENT,
-//     payload: ingredient,
-// });
-//
-// export const closeModalIngredient = () => ({
-//     type: CLOSE_INGREDIENT,
-// });

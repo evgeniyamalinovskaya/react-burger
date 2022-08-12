@@ -1,23 +1,24 @@
-import React, { useState, useRef  } from 'react';
+import React, {useState, useRef, FC, ChangeEvent} from 'react';
 import {Link, Redirect, useLocation} from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import forgotPasswordStyles from './forgot-password.module.css';
-import {useDispatch, useSelector} from 'react-redux';
 import {resetPassword} from "../../services/actions/registration";
+import {useAppDispatch, useAppSelector} from "../../utils/types";
 
 //Восстановление пароля пользователя
-export const ForgotPassword = () => {
-    const user  = useSelector(store => store.user.user);
-    const dispatch = useDispatch();
+export const ForgotPassword: FC = () => {
+    const user  = useAppSelector(store => store.user.user);
+    const dispatch = useAppDispatch();
+    const location = useLocation<{ from: string }>();
     const inputEmailRef = useRef(null)
     const [email, setEmail] = useState('');
 
-    const emailInput = (e) => {
+    const emailInput = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
     }
 
     //Восстановить
-    const forgotPasswordSubmit  = (e) => {
+    const forgotPasswordSubmit  = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!email) {
             return;
@@ -30,14 +31,14 @@ export const ForgotPassword = () => {
     if (user) {
         return (
             //Для переадресации используется компонент Redirect, он перенаправляет пользователя на другую страницу
-            <Redirect to= '/' />
+            <Redirect to={location.state?.from || '/'} />
         );
     }
 
     return (
             <main className={forgotPasswordStyles.container}>
                 <h2 className={`${forgotPasswordStyles.title} text text_type_main-medium pb-6`}>Восстановление пароля</h2>
-                <form className={forgotPasswordStyles.form}  onSubmit={forgotPasswordSubmit}>
+                <form className={forgotPasswordStyles.form} onSubmit={forgotPasswordSubmit}>
                     <Input
                         placeholder='Укажите email'
                         name='email'
@@ -50,7 +51,7 @@ export const ForgotPassword = () => {
                         error={false}
                         errorText="Ошибка"
                          />
-                    <Button disabled={!(email)} type="primary" size="medium" to= '/reset-password'>Восстановить</Button>
+                    <Button disabled={!(email)} type="primary" size="medium">Восстановить</Button>
                 </form>
                 <div className={forgotPasswordStyles.span}>
                     <span className='text text_type_main-default text_color_inactive'>Вспомнили пароль?</span>

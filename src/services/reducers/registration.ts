@@ -27,7 +27,7 @@ import {
 import {TUser} from '../../utils/types';
 
 type TUserState = {
-    user: TUser | null;
+    user: TUser['user'] | null;
 
     registerRequest: boolean;
     registerFailed: boolean;
@@ -57,7 +57,7 @@ type TUserState = {
     tokenSuccess: boolean;
     tokenFailed: boolean
 }
-const initialState = {
+const initialState: TUserState = {
     user: null,
 
     registerRequest: false,

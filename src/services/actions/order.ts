@@ -55,8 +55,3 @@ export const getOrder: AppThunk = (order: Array<string>) => {
             })
     };
 }
-// export function closeOrderModal() {
-//     return {
-//         type: CLOSE_ORDER_MODAL,
-//     };
-// }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {useParams, useRouteMatch} from 'react-router-dom';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -19,17 +19,27 @@ export const OrderIngredient = () => {
     const order = orders?.find((order) => order._id === id);
     const knowIngredient = order?.ingredients.map((orderIngredient) => ingredients.find((ingredient) => ingredient._id === orderIngredient))
 
-    //Функция для использование подсчёта стоимости
-    const price = () => {
-        let sum = 0;
-        knowIngredient?.forEach((ingredient) => {
-            const orderedIngredient = ingredients.find((orderIngredient) => orderIngredient?._id === ingredient?._id);
-            if (orderedIngredient?.price) {
-                sum += orderedIngredient.price;
+    const price = useMemo(() => {
+        return knowIngredient?.reduce((sum, item) => {
+            if (item.type === 'bun') {
+                return sum += item.price * 2
             }
-        });
-        return sum;
-    };
+            return sum += (item ? item.price : 0);
+        }, 0);
+    }, [knowIngredient])
+
+    //Функция для использование подсчёта стоимости
+    // const price = () => {
+    //     let sum = 0;
+    //     knowIngredient?.forEach((ingredient) => {
+    //         const orderedIngredient = ingredients.find((orderIngredient) => orderIngredient?._id === ingredient?._id);
+    //         if (orderedIngredient?.price) {
+    //             sum += orderedIngredient.price;
+    //         }
+    //     });
+    //     return sum;
+    // };
+
     //Изменение даты
     const formatDate = (string) => {
         return new Date(string).toLocaleString();
@@ -80,7 +90,7 @@ export const OrderIngredient = () => {
                     <div className={orderIngredientStyle.item}>
                         <p className={`text text_type_main-default text_color_inactive `}>{formatDate(order?.createdAt)}</p>
                         <div className={orderIngredientStyle.item_container}>
-                            <p className={`${orderIngredientStyle.price}text text_type_digits-default`}>{price()}</p>
+                            <p className={`${orderIngredientStyle.price}text text_type_digits-default`}>{price}</p>
                             <CurrencyIcon type="primary"/>
                         </div>
                     </div>

@@ -43,11 +43,12 @@ const wsUserActions = {
     onMessage: WS_USER_GET_MESSAGE
 };
 
-const composeEnhancers = typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose
-
-// const enhancer = composeEnhancers(applyMiddleware(thunk));
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // Инициализируем хранилище с помощью корневого редьюсера (передаем socketMiddleware и url подключения и словарь типов экшенов, которые будут вызываться на разные события в Websocket.)
 export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions), socketMiddleware(wsUserUrl, wsUserActions))));

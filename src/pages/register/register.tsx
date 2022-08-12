@@ -1,31 +1,31 @@
-import React from 'react';
+import React, { FC, ChangeEvent } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import registerStyles from './register.module.css';
-import { useDispatch, useSelector } from 'react-redux'
 import {registrationUser} from "../../services/actions/registration";
+import {useAppDispatch, useAppSelector} from "../../utils/types";
 
 //Регистрация пользователя
-export const Register = () => {
-    const dispatch = useDispatch();
-    const user = useSelector(store => store.user.user);
+export const Register: FC = () => {
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(store => store.user.user);
 
     const [userNameForm, setUserNameForm] = React.useState('');
     const [emailForm, setEmailForm] = React.useState('');
     const [passwordForm, setPasswordForm] = React.useState('');
 
-    const inputName = (e) => {
+    const inputName = (e: ChangeEvent<HTMLInputElement>) => {
         setUserNameForm(e.target.value)
     }
-    const inputEmail = (e) => {
+    const inputEmail = (e: ChangeEvent<HTMLInputElement>) => {
         setEmailForm(e.target.value)
     }
-    const inputPassword = (e) => {
+    const inputPassword = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordForm(e.target.value)
     }
 
     //Зарегистрироваться
-    const onRegisterUser = (e) => {
+    const onRegisterUser = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(registrationUser(userNameForm, emailForm, passwordForm));
     }
@@ -53,23 +53,23 @@ export const Register = () => {
                             errorText="Ошибка"
                              />
                         <EmailInput
-                            placeholder="email"
+                            // placeholder="email"
                             name='email'
-                            type='email'
+                            // type='email'
                             value={emailForm}
                             onChange={inputEmail}
                             size="default"
-                            error={false}
-                            errorText="Ошибка"
+                            // error={false}
+                            // errorText="Ошибка"
                              />
                         <PasswordInput
                             name='password'
                             value={passwordForm}
                             onChange={inputPassword}
-                            icon="EditIcon"
+                            // icon="EditIcon"
                             size="default"
-                            error={false}
-                            errorText="Ошибка"
+                            // error={false}
+                            // errorText="Ошибка"
                              />
                     </div>
                     <Button disabled={!(userNameForm && emailForm && passwordForm)} type="primary" size="medium">Зарегистрироваться</Button>

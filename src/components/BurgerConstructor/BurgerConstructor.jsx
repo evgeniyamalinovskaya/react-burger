@@ -19,7 +19,7 @@ const BurgerConstructor = () => {
     //Функция для использование подсчёта стоимости
     const price = useMemo(() => {
         return (
-            (bun ? bun.price * 1 : 0) +
+            (bun ? bun.price * 2 : 0) +
             element.reduce((s, v) => s + v.price, 0)
         );
     }, [bun, element]);

@@ -1,41 +1,41 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, FC, ChangeEvent, FormEvent, SyntheticEvent} from "react";
 import { NavLink } from "react-router-dom";
 import profileStyles from './profile.module.css';
-import { Button, Input, EmailInput, PasswordInput, } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from 'react-redux';
+import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { logOut, updateUserInfo} from '../../services/actions/registration';
 import {wsUserConnectionClosed, wsUserConnectionStart} from "../../services/actions/wsUser";
+import {useAppDispatch, useAppSelector} from "../../utils/types";
 
-export const Profile = () => {
-    const dispatch = useDispatch();
-    const user = useSelector(store => store.user.user);
+export const Profile: FC = () => {
+    const dispatch = useAppDispatch();
+    const user = useAppSelector(store => store.user.user);
 
     //Инициализируем хук useRef начальное значение
-    const nameRef = React.useRef(null);
-    const loginRef = React.useRef(null);
-    const passwordRef = React.useRef(null);
+    const nameRef = React.useRef<HTMLInputElement>(null);
+    const loginRef = React.useRef<HTMLInputElement>(null);
+    const passwordRef = React.useRef<HTMLInputElement>(null);
 
     const nameClick  = () => {
-        setTimeout(() => nameRef.current.focus(), 0)
+        setTimeout(() => nameRef.current && nameRef.current.focus(), 0)
     }
     const loginClick = () => {
-        setTimeout(() => loginRef.current.focus(), 0)
+        setTimeout(() => loginRef.current && loginRef.current.focus(), 0)
     }
     const passwordClick = () => {
-        setTimeout(() => passwordRef.current.focus(), 0)
+        setTimeout(() => passwordRef.current && passwordRef.current.focus(), 0)
     }
     //Состояния (текущее и обновленное)
     const [nameForm, setNameForm] = useState('');
     const [loginForm, setLoginForm] = useState('');
     const [passwordForm, setPasswordForm] = useState('');
 
-    const inputName = (e) => {
+    const inputName = (e: ChangeEvent<HTMLInputElement>) => {
         setNameForm(e.target.value)
     }
-    const inputLogin = (e) => {
+    const inputLogin = (e: ChangeEvent<HTMLInputElement>) => {
         setLoginForm(e.target.value)
     }
-    const inputPassword = (e) => {
+    const inputPassword = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordForm(e.target.value)
     }
 
@@ -46,16 +46,16 @@ export const Profile = () => {
     };
 
     //Сохранение
-    const submitHandler = (e) => {
+    const submitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
             dispatch(updateUserInfo(nameForm, loginForm, passwordForm));
         }
 
     //Отмена
-    const reset = (e) => {
+    const reset = (e: SyntheticEvent<Element, Event>) => {
         e.preventDefault()
-        setNameForm(user.name)
-        setLoginForm(user.login)
+        user && setNameForm(user.name)
+        user && setLoginForm(user.email)
         setPasswordForm('')
     }
 
@@ -106,7 +106,7 @@ export const Profile = () => {
                 value={nameForm}
                 onChange={inputName}
                 ref={nameRef}
-                onClick={nameClick}
+                onFocus={nameClick}
                 size="default"
                 error={false}
                 errorText="Ошибка"
@@ -118,7 +118,7 @@ export const Profile = () => {
                 value={loginForm}
                 onChange={inputLogin}
                 ref={loginRef}
-                onClick={loginClick}
+                onFocus={loginClick}
                 icon="EditIcon"
                 size="default"
                 error={false}
@@ -131,7 +131,7 @@ export const Profile = () => {
                 value={passwordForm}
                 onChange={inputPassword}
                 ref={passwordRef}
-                onClick={passwordClick}
+                onFocus={passwordClick}
                 icon="EditIcon"
                 size="default"
                 error={false}

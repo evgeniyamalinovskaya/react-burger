@@ -3,7 +3,7 @@ import { TIngredient } from '../../utils/types';
 
 //Тип состояния
 type TInitialState = {
-    readonly openDetailsModal: TIngredient | string | null;
+    openDetailsModal: TIngredient | string | null;
 }
 //Исходное состояния
 const initialState: TInitialState =  {

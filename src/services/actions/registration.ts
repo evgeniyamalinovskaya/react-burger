@@ -76,7 +76,7 @@ export interface IAuthorizationRequestAction {
 }
 export interface IAuthorizationSuccessAction {
     readonly type: typeof AUTHORIZATION_SUCCESS;
-    readonly payload: TUser;
+    readonly payload: TUser['user'];
 }
 export interface IAuthorizationFailedAction {
     readonly type: typeof AUTHORIZATION_FAILED;
@@ -94,6 +94,7 @@ export const authorizationUser: AppThunk = (email: string, password: string) => 
                 localStorage.setItem('token', res.refreshToken);
                 dispatch({
                     type: AUTHORIZATION_SUCCESS,
+                    payload: res.user,
                 });
             })
             .catch((err) => {
@@ -110,7 +111,7 @@ export interface IRegistrationRequestAction {
 }
 export interface IRegistrationSuccessAction {
     readonly type: typeof REGISTRATION_SUCCESS;
-    readonly payload: TUser;
+    readonly payload: TUser['user'];
 }
 export interface IRegistrationFailedAction {
     readonly type: typeof REGISTRATION_FAILED;
@@ -145,7 +146,7 @@ export interface IGetUserRequestAction {
 }
 export interface IGetUserSuccessAction {
     readonly type: typeof GET_USER_INFO_SUCCESS;
-    readonly payload: TUser;
+    readonly payload: TUser['user'];
 }
 export interface IGetUserFailedAction {
     readonly type: typeof GET_USER_INFO_FAILED;
@@ -177,7 +178,7 @@ export interface IUpdateUserRequestAction {
 }
 export interface IUpdateUserSuccessAction {
     readonly type: typeof UPDATE_USER_INFO_SUCCESS;
-    readonly payload: TUser;
+    readonly payload: TUser['user'];
 }
 export interface IUpdateUserFailedAction {
     readonly type: typeof UPDATE_USER_INFO_FAILED;
@@ -209,7 +210,7 @@ export interface ILogoutRequestAction {
 }
 export interface ILogoutSuccessAction {
     readonly type: typeof LOGOUT_SUCCESS;
-    readonly payload: TUser | null;
+    readonly payload: TUser['user'] | null;
 }
 export interface ILogoutFailedAction {
     readonly type: typeof LOGOUT_FAILED;
@@ -221,11 +222,11 @@ export const logOut: AppThunk = (refreshToken) => {
         });
         logout(refreshToken)
             .then(() => {
-                console.log('logout')
                 deleteCookie('token');
                 localStorage.removeItem('token');
                 dispatch({
                     type: LOGOUT_SUCCESS,
+                    payload: null
                 });
             })
             .catch(() => {

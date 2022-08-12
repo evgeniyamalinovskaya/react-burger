@@ -1,13 +1,20 @@
 import update from 'immutability-helper';
-import { ADD_BUN, RESET_INGREDIENT, DELETE_INGREDIENT } from '../actions/constructor';
+import {ADD_BUN, RESET_INGREDIENT, DELETE_INGREDIENT, TIngredientConstructorActions} from '../actions/constructor';
+import {TIngredient} from "../../utils/types";
 
-const initialConstructorState = {
+//Тип состояния
+type TInitialConstructorState = {
+    element: Array<TIngredient>;
+    bun: TIngredient | null;
+    productsIds: string[];
+}
+const initialConstructorState: TInitialConstructorState = {
     element: [],
     bun: null,
     productsIds: [],
 }
 
-export const burgerConstructorReducer = (state = initialConstructorState, action) => {
+export const burgerConstructorReducer = (state = initialConstructorState, action: TIngredientConstructorActions): TInitialConstructorState => {
     switch (action.type) {
         case ADD_BUN:
             //если только булка
@@ -16,7 +23,7 @@ export const burgerConstructorReducer = (state = initialConstructorState, action
                     return {
                         ...state,
                         bun: action.item,
-                        productsIds: state.productsIds.filter(id => id !== state.bun._id)    //id
+                        productsIds: state.productsIds.filter(id => id !== state?.bun?._id)    //id
                             .concat(action.item._id),
                     };
                 } else {

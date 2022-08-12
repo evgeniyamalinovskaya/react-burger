@@ -1,4 +1,5 @@
-import {getCookie} from '../../utils/cookie'
+import {getCookie} from '../../utils/cookie';
+import {TIngredientsParseResponse, TOrdersParseResponse, TPasswordParseResponse, TUser} from '../../utils/types';
 //ссылка
 const api = {
     url: 'https://norma.nomoreparties.space/api',
@@ -8,14 +9,7 @@ const api = {
 };
 
 //Вспомогательная функция ответа
-// const parseResponse = (res) => {
-//     if (res.ok) {
-//         return res.json();
-//     }
-//     return Promise.reject(new Error(`Произошла ошибка со статус-кодом ${res.status}`));
-// }
-
-const parseResponse = (res) => (res.ok ? res.json() : res.json().then((err) => Promise.reject(err)));
+const parseResponse = <T>(res: Response): Promise<T> => (res.ok ? res.json() : res.json().then((err) => Promise.reject(err)));
 
 //Запрос данных с сервера
 const getData = () => {
@@ -23,11 +17,11 @@ const getData = () => {
         headers: api.headers,
         method: 'GET',
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TIngredientsParseResponse>(res))
 };
 
 //Отправка данных заказа
-const setData = (order) => {
+const setData = (order: Array<string>) => {
     return fetch(`${api.url}/orders`, {
         headers: {
             'Content-Type': 'application/json',
@@ -36,11 +30,11 @@ const setData = (order) => {
         method: 'POST',
         body: JSON.stringify({ingredients: order})
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TOrdersParseResponse>(res))
 };
 
 //Запрос для авторизации пользователя ()
-const authorization = (email, password) => {
+const authorization = (email: string, password: string) => {
     return fetch(`${api.url}/auth/login`, {
         method: 'POST',
         headers: api.headers,
@@ -49,11 +43,11 @@ const authorization = (email, password) => {
             password: password,
         }),
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TUser>(res))
 }
 
 //Запрос для регистрацию пользователя ()
-const registerUser = (name, email, password) => {
+const registerUser = (name: string, email: string, password: string) => {
     return fetch(`${api.url}/auth/register`, {
         method: 'POST',
         headers: api.headers,
@@ -63,7 +57,7 @@ const registerUser = (name, email, password) => {
             'password': password
         })
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TUser>(res))
 }
 
 //Запрос получения данных о пользователе ()
@@ -76,11 +70,11 @@ const userData = () => {
             Authorization: 'Bearer ' + getCookie('token')
         },
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TUser>(res))
 }
 
 //Запрос обновления данных о пользователе ()
-const userUpdate = (name, email, password) => {
+const userUpdate = (name: string, email: string, password: string) => {
     return fetch(`${api.url}/auth/user`, {
         method: 'PATCH',
         headers: {
@@ -94,11 +88,11 @@ const userUpdate = (name, email, password) => {
             password: password
         })
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TUser>(res))
 }
 
 //Запрос для выхода из системы ()
-const logout = (refreshToken) => {
+const logout = (refreshToken: string) => {
     return fetch(`${api.url}/auth/logout`, {
         method: 'POST',
         headers: api.headers,
@@ -111,6 +105,7 @@ const logout = (refreshToken) => {
 
 //Запрос обновления токена ()
 const freshToken = () => {
+    console.log('freshToken')
     return fetch(`${api.url}/auth/token`, {
         method: 'POST',
         headers: {
@@ -122,11 +117,11 @@ const freshToken = () => {
             token: localStorage.getItem('token')
         })
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TUser>(res))
 }
 
 //Запрос на восстановление пароля пользователя (готово)
-const recoveryPassword = (email) => {
+const recoveryPassword = (email: string) => {
     return fetch(`${api.url}/password-reset`, {
         method: 'POST',
         headers: api.headers,
@@ -134,11 +129,11 @@ const recoveryPassword = (email) => {
             email: email
         })
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TPasswordParseResponse>(res))
 }
 
 //Запрос сброса пароля пользователя ()
-const updatePassword = (token, password) => {
+const updatePassword = (token: string, password: string) => {
     return fetch(`${api.url}/password-reset/reset`, {
         method: 'POST',
         headers: api.headers,
@@ -147,7 +142,7 @@ const updatePassword = (token, password) => {
             password: password,
         })
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TPasswordParseResponse>(res))
 }
 
 

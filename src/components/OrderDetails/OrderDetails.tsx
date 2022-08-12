@@ -1,10 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, {FC} from 'react';
 import orderDetailsStyle from './OrderDetails.module.css';
+import { useAppSelector} from "../../utils/types";
 
-const OrderDetails = () => {
+const OrderDetails: FC = () => {
     /* Обращение к store */
-    const  { orderFailed, orderNumber } = useSelector(store => store.order);
+    const  { orderFailed, orderNumber } = useAppSelector(store => store.order);
 
     return(
         <div className={`${orderDetailsStyle.container} pt-30 pb-30`}>

@@ -32,7 +32,7 @@ export interface IGetIngredientsErrorAction {
 }
 export interface IGetCurrentTabAction {
     type: typeof GET_CURRENT_TAB;
-    currentTab: Array<TIngredient>
+    currentTab: string
 }
 
 //Типизированный thunk

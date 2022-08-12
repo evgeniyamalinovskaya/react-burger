@@ -7,12 +7,15 @@ import {TGetIngredientsActions} from "../services/actions/ingredients";
 import {TUserActions} from "../services/actions/registration";
 import {TWsActions} from "../services/actions/wsActionTypes";
 import {TWsUserActions} from "../services/actions/wsUser";
+import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
 
 type TApplicationActions = TIngredientModalActions | TGetIngredientsActions | TGetOrderActions | TUserActions | TWsActions | TWsUserActions;
 
 export type RootState = ReturnType<typeof store.getState>;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 // Типизация метода dispatch для проверки на валидность отправляемого экшена
 export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch & AppThunk>();
 // Типизация thunk в нашем приложении
 export type AppThunk<ReturnType = void> = ActionCreator<
     ThunkAction<ReturnType, Action, RootState, TApplicationActions>
@@ -32,8 +35,25 @@ export type TIngredient = {
     image_mobile: string;
     image_large: string;
     __v: number;
+    uId?: string;
     currentTab?: number | undefined;
 };
+
+//Типы для Api
+export type TIngredientsParseResponse = {
+    data: TIngredient[];
+    success: boolean;
+}
+
+export type TOrdersParseResponse = {
+    name: string;
+    order: { number: number };
+    success: boolean;
+}
+export type TPasswordParseResponse = {
+    success: boolean;
+    message: string;
+}
 
 //Тип для User
 export type TUser = {
@@ -49,6 +69,7 @@ export type TUser = {
 //Тип для socketMiddleware
 export type TWs = {
     wsInit: string;
+    wsInitWithToken: string;
     wsSendMessage: string;
     onOpen: string;
     onClose: string;

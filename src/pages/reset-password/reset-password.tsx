@@ -1,44 +1,44 @@
-import React, { useState, useRef  } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, {useState, useRef, ChangeEvent, FC} from 'react';
+import { Link, Redirect, useLocation } from 'react-router-dom';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import resetPasswordStyles from './reset-password.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import {newPassword} from "../../services/actions/registration";
+import {useAppDispatch, useAppSelector} from "../../utils/types";
 
-export const ResetPassword = () => {
-    const user = useSelector(store => store.user.user);
-
-    const dispatch = useDispatch();
-    const passwordRef = useRef(null);
-    const tokenRef = useRef(null);
+export const ResetPassword: FC = () => {
+    const user = useAppSelector(store => store.user.user);
+    const location = useLocation<{ from: string }>();
+    const dispatch = useAppDispatch();
+    const passwordRef = useRef<HTMLInputElement>(null);
+    const tokenRef = useRef<HTMLInputElement>(null);
 
     const [passwordForm, setPasswordForm] = useState('');
-    const [token, setToken] = React.useState('');
+    const [token, setToken] = useState('');
 
-    const emailInput = (e) => {
+    const emailInput = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordForm(e.target.value)
     }
 
-    const tokenInput = (e) => {
+    const tokenInput = (e: ChangeEvent<HTMLInputElement>) => {
         setToken(e.target.value)
     }
     //Сохранить
-    const saveNewPassword = (evt) => {
-        evt.preventDefault();
+    const saveNewPassword = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         dispatch(newPassword(passwordForm, token))
     }
 
     //Проверяем, авторизован ли пользователь
     if (user) {
         return (
-            <Redirect to={ '/'} />
+            <Redirect to={location.state?.from || '/'} />
         );
     }
     return (
         <main className={resetPasswordStyles.container}>
             <h2 className={`${resetPasswordStyles.title} text text_type_main-medium pb-6`}>Восстановление пароля</h2>
             <form className={resetPasswordStyles.form} onSubmit={saveNewPassword}>
-                <PasswordInput
+                <Input
                     placeholder='Введите новый пароль'
                     name='password'
                     onChange={emailInput}

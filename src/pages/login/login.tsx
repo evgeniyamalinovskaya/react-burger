@@ -1,29 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, FC, ChangeEvent, FormEvent } from 'react';
 import {Link, Redirect, useLocation } from 'react-router-dom';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import loginStyles from './login.module.css';
 import { authorizationUser } from "../../services/actions/registration";
-import {useDispatch, useSelector} from "react-redux";
+import {useAppDispatch, useAppSelector} from "../../utils/types";
 
 //Авторизация пользователя
-export const Login = () => {
-    const user = useSelector((store) => store.user.user);
-    const dispatch = useDispatch();
-    const location = useLocation();
+export const Login: FC = () => {
+    const user = useAppSelector((store) => store.user.user);
+    const dispatch = useAppDispatch();
+    const location = useLocation<{ from: string }>();
 
     //Состояния (текущее и обновленное)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const inputEmail = (e) => {
+    const inputEmail = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value)
     }
-    const inputPassword = (e) => {
+    const inputPassword = (e: ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value)
     }
 
     //Войти
-    const submitLogin = (e) => {
+    const submitLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(authorizationUser(email, password));
     };
@@ -41,27 +41,27 @@ return (
             <form className={loginStyles.form} onSubmit={submitLogin}>
                 <div className="mt-6 mb-6">
                     <EmailInput
-                        placeholder="email"
+                        // placeholder="email"
                         name="email"
-                        type="email"
+                        // type="email"
                         onChange={inputEmail}
                         value={email}
-                        error={false}
-                        errorText="Ошибка"
+                        // error={false}
+                        // errorText="Ошибка"
                         size="default"
                     />
                 </div>
                 <div className="mb-6">
                     <PasswordInput
-                        placeholder="Пароль"
+                        // placeholder={"Пароль"}
                         name="password"
-                        type="password"
+                        // type="password"
                         onChange={inputPassword}
                         value={password}
-                        icon="EditIcon"
+                        // icon="EditIcon"
                         size="default"
-                        error={false}
-                        errorText="Ошибка"
+                        // error={false}
+                        // errorText="Ошибка"
                     />
                 </div>
                 <Button disabled={!(email && password)} type="primary" size="medium">Войти</Button>
