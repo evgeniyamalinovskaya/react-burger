@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect, FC} from 'react';
 import {OrderIngredient} from '../orderIngredient/orderIngredient';
 import orderIngredientIdStyles from './orderIngredientId.module.css';
 import {wsConnectionClosed, wsConnectionOpen} from "../../services/actions/wsActionTypes";
 import {wsUserConnectionClosed, wsUserConnectionStart} from "../../services/actions/wsUser";
+import {useAppDispatch} from "../../utils/types";
 
-export const OrderIngredientId = () => {
-    const dispatch = useDispatch();
+export const OrderIngredientId: FC = () => {
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(wsConnectionOpen())

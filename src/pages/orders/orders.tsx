@@ -1,17 +1,17 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC } from 'react';
 import ordersStyles from './orders.module.css';
+import {useAppSelector} from "../../utils/types";
 
-export const Orders = () => {
-    const orders = useSelector(store => store.wsOrders.orders);
+export const Orders: FC = () => {
+    const orders = useAppSelector(store => store.wsOrders.orders);
     //Готовые
     const doneStatus = orders.filter(order => order.status === 'done').filter((order, index) => index < 10)
     //В ожидании
     const pendingStatus = orders.filter(order => order.status !== 'done').filter((order, index) => index >= 10)
     //Выполнено за время
-    const total = useSelector((state) => state.wsOrders.total);
+    const total = useAppSelector((state) => state.wsOrders.total);
     //Выполнено за сегодня
-    const totalToday = useSelector((state) => state.wsOrders.totalToday);
+    const totalToday = useAppSelector((state) => state.wsOrders.totalToday);
 
     return (
         <section className={ordersStyles.container}>

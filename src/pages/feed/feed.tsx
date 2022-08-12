@@ -1,12 +1,12 @@
 import React, { useEffect }from 'react';
-import { useDispatch } from 'react-redux'
 import feedStyles from './feed.module.css';
 import { Orders } from '../orders/orders';
 import { OrdersInformation } from '../orderInformation/orderInformation';
 import { wsConnectionOpen, wsConnectionClosed } from '../../services/actions/wsActionTypes';
+import {useAppDispatch} from "../../utils/types";
 
 export const Feed = () => {
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(wsConnectionOpen())

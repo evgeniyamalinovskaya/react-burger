@@ -1,17 +1,17 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, { FC } from 'react';
 import {Link, useLocation, useRouteMatch} from 'react-router-dom'
 import {Information} from '../Information/information';
 import orderInformationStyles from './orderInformation.module.css';
+import {useAppSelector} from "../../utils/types";
 
 // Список заказов
-export const OrdersInformation = () => {
+export const OrdersInformation: FC = () => {
     const location = useLocation();
     let match = useRouteMatch();
     const profilePath = '/profile/orders';
 
-    const allOrders = useSelector(store => store.wsOrders.orders);
-    const myOrders = useSelector(store => store.wsUser.orders).slice();
+    const allOrders = useAppSelector(store => store.wsOrders.orders);
+    const myOrders = useAppSelector(store => store.wsUser.orders).slice();
 
     myOrders.reverse();
 
@@ -31,7 +31,7 @@ export const OrdersInformation = () => {
 
                         {isProfile === true &&
                         <Information
-                            status={order.status}
+                            status=''
                             orderNumber={order.number}
                             createdAt={order.createdAt}
                             orderBurgerName={order.name}

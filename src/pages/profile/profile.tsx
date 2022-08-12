@@ -42,7 +42,7 @@ export const Profile: FC = () => {
     //Выход
     const logoutCancel = () => {
         const refreshToken = localStorage.getItem('token');
-        dispatch(logOut(refreshToken));
+        refreshToken && dispatch(logOut(refreshToken));
     };
 
     //Сохранение

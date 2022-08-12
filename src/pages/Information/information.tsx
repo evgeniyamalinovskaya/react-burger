@@ -1,15 +1,23 @@
-import React from "react";
-import {useSelector} from "react-redux";
-import PropTypes from "prop-types";
+import React, { FC } from "react";
+// import PropTypes from "prop-types";
 import { useMemo } from 'react';
 import informationStyles from './information.module.css';
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useAppSelector} from "../../utils/types";
 
-export const Information = ({status, orderNumber, createdAt, orderBurgerName, ingredients}) => {
-    const allIngredients = useSelector(store => store.burgerIngredients.ingredients);
+type TInformation = {
+    status: string;
+    orderNumber: number;
+    createdAt: string;
+    orderBurgerName: string;
+    ingredients: string[];
+}
+
+export const Information: FC<TInformation> = ({status, orderNumber, createdAt, orderBurgerName, ingredients}) => {
+    const allIngredients = useAppSelector(store => store.burgerIngredients.ingredients);
 
     //Изменение даты
-    const formatDate = (string) => {
+    const formatDate = (string: string) => {
         return new Date(string).toLocaleString();
     }
     const numbersHidden  = ingredients.length;
@@ -67,7 +75,8 @@ export const Information = ({status, orderNumber, createdAt, orderBurgerName, in
                     ingredientData.slice(0, 5).map((el, index) => {
                         return (
                             <li className={informationStyles.ingredient} key={index}>
-                                <Ingredient ingredientImage={el.image} ingredientName={el.name} />
+                                {el &&
+                                <Ingredient ingredientImage={el.image} ingredientName={el.name} />}
                             </li>
                         )
                     })
@@ -78,6 +87,7 @@ export const Information = ({status, orderNumber, createdAt, orderBurgerName, in
                             <div className={informationStyles.length}>
                                 {ingredientData.slice(5, 6).map((el, index) => {
                                     return (
+                                       el &&
                                         <Ingredient ingredientImage={el.image} ingredientName={el.name} key={index} />
                                     )
                                 })
@@ -97,7 +107,12 @@ export const Information = ({status, orderNumber, createdAt, orderBurgerName, in
     );
 }
 
-const Ingredient = ({ ingredientImage, ingredientName }) => {
+type TIng = {
+    ingredientName: string;
+    ingredientImage: string;
+}
+
+const Ingredient: FC<TIng> = ({ ingredientImage, ingredientName }) => {
     return (
         <div className={informationStyles.container}>
             <div className={informationStyles.list}>
@@ -107,15 +122,15 @@ const Ingredient = ({ ingredientImage, ingredientName }) => {
     );
 }
 
-Ingredient.propTypes = {
-    ingredientName: PropTypes.string.isRequired,
-    ingredientImage: PropTypes.string.isRequired,
-}
-
-Information.propTypes = {
-    status: PropTypes.string.isRequired,
-    orderNumber: PropTypes.number.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    orderBurgerName: PropTypes.string.isRequired,
-    ingredients: PropTypes.array.isRequired,
-}
+// Ingredient.propTypes = {
+//     ingredientName: PropTypes.string.isRequired,
+//     ingredientImage: PropTypes.string.isRequired,
+// }
+//
+// Information.propTypes = {
+//     status: PropTypes.string.isRequired,
+//     orderNumber: PropTypes.number.isRequired,
+//     createdAt: PropTypes.string.isRequired,
+//     orderBurgerName: PropTypes.string.isRequired,
+//     ingredients: PropTypes.array.isRequired,
+// }

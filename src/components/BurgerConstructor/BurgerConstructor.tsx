@@ -1,5 +1,4 @@
-import React, { useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {FC, useMemo} from 'react';
 import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './BurgerConstructor.module.css';
 import ConstructorDetails from '../ConstructorDetails/ConstructorDetails';
@@ -8,13 +7,14 @@ import { addBun, deleteItem} from "../../services/actions/constructor";
 import { useDrop } from 'react-dnd';
 import bunImage from './image/PyhkoigriqQ8Q4t7EziOdA.png';
 import {useHistory} from "react-router-dom";
+import {TIngredient, useAppDispatch, useAppSelector} from "../../utils/types";
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
     /* Обращение к store */
-    const element = useSelector(store => store.burgerConstructor.element);
-    const user = useSelector(store => store.user.user);
-    const bun = useSelector(store => store.burgerConstructor.bun);
-    const productsIds = useSelector(store => store.burgerConstructor.productsIds);
+    const element = useAppSelector(store => store.burgerConstructor.element);
+    const user = useAppSelector(store => store.user.user);
+    const bun = useAppSelector(store => store.burgerConstructor.bun);
+    const productsIds = useAppSelector(store => store.burgerConstructor.productsIds);
 
     //Функция для использование подсчёта стоимости
     const price = useMemo(() => {
@@ -24,17 +24,17 @@ const BurgerConstructor = () => {
         );
     }, [bun, element]);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const history = useHistory();
     //Открытие модального окна оформить заказ
-    const orderModal = (ids) => {
+    const orderModal = (ids: string[]) => {
         user && dispatch(getOrder(ids));
         !user && history.push('/login')
     };
 
     const [{ isHover }, drop] = useDrop({
         accept: 'ingredient',
-        drop({ ingredient}) {
+        drop({ ingredient }: { ingredient: TIngredient; }) {
             dispatch(addBun(ingredient));
         },
         collect: (monitor) => ({
@@ -42,7 +42,7 @@ const BurgerConstructor = () => {
         }),
     });
     //Удаление ингредиента из выбранного списка
-    const handleDelete = (item) => {
+    const handleDelete = (item: TIngredient) => {
         dispatch(deleteItem(item));
     }
 

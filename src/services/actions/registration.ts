@@ -215,7 +215,7 @@ export interface ILogoutSuccessAction {
 export interface ILogoutFailedAction {
     readonly type: typeof LOGOUT_FAILED;
 }
-export const logOut: AppThunk = (refreshToken) => {
+export const logOut: AppThunk = (refreshToken: string) => {
     return function (dispatch: AppDispatch) {
         dispatch({
             type: LOGOUT_REQUEST,

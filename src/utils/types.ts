@@ -5,8 +5,18 @@ import {TIngredientModalActions} from "../services/actions/ingredient";
 import {TGetOrderActions} from "../services/actions/order";
 import {TGetIngredientsActions} from "../services/actions/ingredients";
 import {TUserActions} from "../services/actions/registration";
-import {TWsActions} from "../services/actions/wsActionTypes";
-import {TWsUserActions} from "../services/actions/wsUser";
+import {
+    TWsActions, WS_CONNECTION_CLOSED, WS_CONNECTION_ERROR,
+    WS_CONNECTION_START,
+    WS_CONNECTION_SUCCESS, WS_GET_MESSAGE,
+    WS_SEND_MESSAGE
+} from "../services/actions/wsActionTypes";
+import {
+    TWsUserActions, WS_USER_CONNECTION_CLOSED, WS_USER_CONNECTION_ERROR,
+    WS_USER_CONNECTION_START,
+    WS_USER_CONNECTION_SUCCESS, WS_USER_GET_MESSAGE,
+    WS_USER_SEND_MESSAGE
+} from "../services/actions/wsUser";
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
 
 type TApplicationActions = TIngredientModalActions | TGetIngredientsActions | TGetOrderActions | TUserActions | TWsActions | TWsUserActions;
@@ -66,16 +76,24 @@ export type TUser = {
     refreshToken: string;
 };
 
-//Тип для socketMiddleware
-export type TWs = {
-    wsInit: string;
-    wsInitWithToken: string;
-    wsSendMessage: string;
-    onOpen: string;
-    onClose: string;
-    onError: string;
-    onMessage: string;
-};
+//Тип для socketMiddleware (токен)
+export interface TWsUserSocketMiddlewareActions {
+    wsInitWithToken?: typeof WS_USER_CONNECTION_START,
+    wsSendMessage: typeof WS_USER_SEND_MESSAGE,
+    onOpen: typeof WS_USER_CONNECTION_SUCCESS,
+    onClose: typeof WS_USER_CONNECTION_CLOSED,
+    onError: typeof WS_USER_CONNECTION_ERROR,
+    onMessage: typeof WS_USER_GET_MESSAGE,
+}
+//Тип для socketMiddleware (user)
+export interface TWsSocketMiddlewareActions {
+    wsInit?: typeof WS_CONNECTION_START,
+    wsSendMessage: typeof WS_SEND_MESSAGE,
+    onOpen: typeof WS_CONNECTION_SUCCESS,
+    onClose: typeof WS_CONNECTION_CLOSED,
+    onError: typeof WS_CONNECTION_ERROR,
+    onMessage: typeof WS_GET_MESSAGE,
+}
 
 export type TOrderDetails = {
     ingredients: Array<string>;

@@ -1,15 +1,27 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux'
+import React, {useEffect, FC} from 'react';
 import myOrdersStyles from './myorders.module.css';
 import {OrdersInformation} from '../orderInformation/orderInformation';
 import {wsUserConnectionClosed, wsUserConnectionStart} from "../../services/actions/wsUser";
 import profileStyles from "../profile/profile.module.css";
 import {logOut} from "../../services/actions/registration";
 import {NavLink, Route, Switch, useLocation} from "react-router-dom";
+import {useAppDispatch} from "../../utils/types";
 
-export const MyOrders = () => {
-    const dispatch = useDispatch()
-    const location = useLocation();
+type TLocation = {
+    background: {
+        pathname: string;
+        search: string;
+        hash: string;
+        state: null;
+        key: string;
+    }
+    from: string;
+    state?: object;
+};
+
+export const MyOrders: FC = () => {
+    const dispatch = useAppDispatch()
+    const location = useLocation<TLocation >();
     const background = location.state?.background;
 
     useEffect(() => {
@@ -20,9 +32,9 @@ export const MyOrders = () => {
     }, [dispatch])
 
     //Выход
-    const logoutCancel = () => {
+    const logoutCancel = ()  => {
         const refreshToken = localStorage.getItem('token');
-        dispatch(logOut(refreshToken));
+        refreshToken && dispatch(logOut(refreshToken));
     };
 
     return (

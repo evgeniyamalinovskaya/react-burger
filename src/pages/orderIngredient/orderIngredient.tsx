@@ -1,47 +1,47 @@
-import React, {useMemo} from 'react';
-import {useSelector} from 'react-redux';
+import React, { FC } from 'react';
 import {useParams, useRouteMatch} from 'react-router-dom';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import orderIngredientStyle from './orderIngredient.module.css';
+import {useAppSelector} from "../../utils/types";
 
 //Один заказ
-export const OrderIngredient = () => {
-    const {id} = useParams();
+export const OrderIngredient: FC = () => {
+    const {id} = useParams<{ id: string }>();
     let match = useRouteMatch();
     const profilePath = '/profile/orders/:id';
     let isProfile = match.path === profilePath;
 
-    const allOrders = useSelector(store => store.wsOrders.orders);
-    const myOrders = useSelector(store => store.wsUser.orders).slice();
+    const allOrders = useAppSelector(store => store.wsOrders.orders);
+    const myOrders = useAppSelector(store => store.wsUser.orders).slice();
     let orders = isProfile ? myOrders : allOrders;
 
-    const ingredients = useSelector((store) => store.burgerIngredients.ingredients);
+    const ingredients = useAppSelector((store) => store.burgerIngredients.ingredients);
     const order = orders?.find((order) => order._id === id);
     const knowIngredient = order?.ingredients.map((orderIngredient) => ingredients.find((ingredient) => ingredient._id === orderIngredient))
 
-    const price = useMemo(() => {
-        return knowIngredient?.reduce((sum, item) => {
-            if (item.type === 'bun') {
-                return sum += item.price * 2
-            }
-            return sum += (item ? item.price : 0);
-        }, 0);
-    }, [knowIngredient])
+    // const price = useMemo(() => {
+    //     return knowIngredient?.reduce((sum, item) => {
+    //         if (item.type === 'bun') {
+    //             return sum += item.price * 2
+    //         }
+    //         return sum += (item ? item.price : 0);
+    //     }, 0);
+    // }, [knowIngredient])
 
     //Функция для использование подсчёта стоимости
-    // const price = () => {
-    //     let sum = 0;
-    //     knowIngredient?.forEach((ingredient) => {
-    //         const orderedIngredient = ingredients.find((orderIngredient) => orderIngredient?._id === ingredient?._id);
-    //         if (orderedIngredient?.price) {
-    //             sum += orderedIngredient.price;
-    //         }
-    //     });
-    //     return sum;
-    // };
+    const price = () => {
+        let sum = 0;
+        knowIngredient?.forEach((ingredient) => {
+            const orderedIngredient = ingredients.find((orderIngredient) => orderIngredient?._id === ingredient?._id);
+            if (orderedIngredient?.price) {
+                sum += orderedIngredient.price;
+            }
+        });
+        return sum;
+    };
 
     //Изменение даты
-    const formatDate = (string) => {
+    const formatDate = (string: string) => {
         return new Date(string).toLocaleString();
     }
 

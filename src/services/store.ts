@@ -20,13 +20,14 @@ import {
 import {rootReducer} from './reducers';
 import {socketMiddleware} from './socketMiddleware/socketMiddleware';
 import thunk from 'redux-thunk';
+import {TWsSocketMiddlewareActions, TWsUserSocketMiddlewareActions} from "../utils/types";
 
 //Чтобы подключиться к бэкенду для получения всех заказов, используйте URL
 const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 const wsUserUrl = 'wss://norma.nomoreparties.space/orders';
 
 //Словарь типов экшенов
-const wsActions = {
+const wsActions: TWsSocketMiddlewareActions = {
     wsInit: WS_CONNECTION_START,
     wsSendMessage: WS_SEND_MESSAGE,
     onOpen: WS_CONNECTION_SUCCESS,
@@ -34,7 +35,7 @@ const wsActions = {
     onError: WS_CONNECTION_ERROR,
     onMessage: WS_GET_MESSAGE
 };
-const wsUserActions = {
+const wsUserActions: TWsUserSocketMiddlewareActions = {
     wsInitWithToken: WS_USER_CONNECTION_START,
     wsSendMessage: WS_USER_SEND_MESSAGE,
     onOpen: WS_USER_CONNECTION_SUCCESS,
