@@ -1,4 +1,4 @@
-import React, {FC, useMemo} from 'react';
+import React, {FC, useMemo, ReactNode} from 'react';
 import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './BurgerConstructor.module.css';
 import ConstructorDetails from '../ConstructorDetails/ConstructorDetails';
@@ -9,7 +9,11 @@ import bunImage from './image/PyhkoigriqQ8Q4t7EziOdA.png';
 import {useHistory} from "react-router-dom";
 import {TIngredient, useAppDispatch, useAppSelector} from "../../utils/types";
 
-const BurgerConstructor: FC = () => {
+// interface Class {
+//     сlassname?: string;
+// }
+
+const BurgerConstructor: FC<HTMLStyleElement> = () => {
     /* Обращение к store */
     const element = useAppSelector(store => store.burgerConstructor.element);
     const user = useAppSelector(store => store.user.user);

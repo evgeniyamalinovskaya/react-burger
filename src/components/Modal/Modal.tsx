@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import modalStyles from './Modal.module.css';
 import ModalOverlay from '../ModalOverlay/ModalOverlay';
@@ -6,12 +6,15 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
 // Находим DOM-элемент для отрисовки в нем модальных окон
-const modalsContainer = document.querySelector('#modals');
-
-export const Modal = ({ onClose, children }) => {
+const modalsContainer = document.querySelector('#modals') as HTMLElement;
+type TModal = {
+    onClose: () => void;
+    children?: ReactNode;
+}
+export const Modal: FC<TModal> = ({ onClose, children }) => {
 
     // Обработка нажатия Esc
-    const handleEscKeydown = (e) => {
+    const handleEscKeydown = (e: {key: string}) => {
         e.key === "Escape" && onClose();
     };
 
@@ -39,9 +42,5 @@ export const Modal = ({ onClose, children }) => {
 );
 };
 
-Modal.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired
-};
 
 
