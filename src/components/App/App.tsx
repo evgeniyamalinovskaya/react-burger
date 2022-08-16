@@ -1,9 +1,8 @@
-import React from 'react';
+import React, {FC} from 'react';
 import AppStyles from './App.module.css';
 import {} from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import { useDispatch, useSelector } from 'react-redux';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import { Modal } from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
@@ -26,19 +25,20 @@ import { Feed } from '../../pages/feed/feed';
 import { OrderIngredient } from '../../pages/orderIngredient/orderIngredient';
 import {MyOrders} from "../../pages/myorders/myOrders";
 import {OrderIngredientId} from '../../pages/idOrderIngredient/orderIngredientId';
+import {useAppDispatch, useAppSelector, TLocation} from "../../utils/types";
 
-const App = () => {
+const App: FC = () => {
     //Стор состояния в компонентах
-    const { ingredientsRequest, ingredientsFailed } = useSelector(store => store.burgerIngredients);
-    const orderNumber  = useSelector(store => store.order.orderNumber);
-    const user = useSelector(store => store.user.user);
-    const dispatch = useDispatch();
-    const location = useLocation();
+    const { ingredientsRequest, ingredientsFailed } = useAppSelector(store => store.burgerIngredients);
+    const orderNumber  = useAppSelector(store => store.order.orderNumber);
+    const user = useAppSelector(store => store.user.user);
+    const dispatch = useAppDispatch();
+    const location = useLocation<TLocation>();
     const history = useHistory();
     const background = location.state?.background;
     const cookie = getCookie('token')
     const refreshTokenData = localStorage.getItem('token');
-    const tokenSuccess = useSelector(store => store.user.tokenSuccess);
+    const tokenSuccess = useAppSelector(store => store.user.tokenSuccess);
 
     React.useEffect(() => {
         // Отправляем экшен при монтировании компонента
@@ -119,13 +119,12 @@ const App = () => {
                     <Route>
                         <NotFound404 />
                     </Route>
-                    />
                 </Switch>
             {background && (
                 <>
                 <Route
                     path='/ingredients/:id'>
-                    <Modal title="Детали ингредиента" onClose={handleClose}>
+                    <Modal title="" onClose={handleClose}>
                         <IngredientDetails />
                     </Modal>
                 </Route>
@@ -148,7 +147,7 @@ const App = () => {
 
         </>
             {orderNumber &&  (
-                <Modal title="Детали заказа" onClose={handleClose}>
+                <Modal title='' onClose={handleClose}>
                     <OrderDetails />
                 </Modal>
             )}

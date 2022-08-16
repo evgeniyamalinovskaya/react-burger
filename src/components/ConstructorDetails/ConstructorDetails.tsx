@@ -1,14 +1,12 @@
-import React, {useRef} from 'react';
+import React, {FC, useRef} from 'react';
 import {DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorDetailsStyles from './ConstructorDetails.module.css';
-import {useDispatch} from "react-redux";
 import { resetItem} from "../../services/actions/constructor";
 import {useDrag, useDrop} from "react-dnd";
-import PropTypes from 'prop-types';
-import ingredient from "../../utils/ingredient";
+import {TConstructorDetails, useAppDispatch} from "../../utils/types";
 
-const ConstructorDetails = ( {item, index, handleDelete} ) => {
-    const dispatch = useDispatch();
+const ConstructorDetails: FC<TConstructorDetails> = ( {item, index, handleDelete} ) => {
+    const dispatch = useAppDispatch();
 
     const id = item.uId;
 
@@ -26,25 +24,14 @@ const ConstructorDetails = ( {item, index, handleDelete} ) => {
             if (!ref.current) {
                 return;
             }
-            const dragIndex = item.index;
+            const dragIndex = index;
             const hoverIndex = index;
 
             if (dragIndex === hoverIndex) {
                 return;
             }
-            const hoverBoundingRect = ref.current?.getBoundingClientRect();
-            const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-            const clientOffset = monitor.getClientOffset();
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-            if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-                return;
-            }
-            if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-                return;
-            }
             dispatch(resetItem(dragIndex, hoverIndex));
-            item.index = hoverIndex;
+            index = hoverIndex;
         },
     });
 
@@ -59,9 +46,7 @@ const ConstructorDetails = ( {item, index, handleDelete} ) => {
     });
 
     const opacity = isDragging ? 0 : 1;
-
     drag(drop(ref));
-
 
     return (
         <ul className={constructorDetailsStyles.OrderDetails} data-handler-id={handlerId} ref={ref} style={{ opacity }}>
@@ -79,11 +64,5 @@ const ConstructorDetails = ( {item, index, handleDelete} ) => {
         </ul>
     );
 }
-
-ConstructorDetails.propTypes = {
-    item: ingredient.isRequired,
-    index: PropTypes.number.isRequired,
-    handleDelete: PropTypes.func.isRequired,
-};
 
 export default ConstructorDetails;

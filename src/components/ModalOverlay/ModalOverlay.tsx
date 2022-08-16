@@ -1,10 +1,6 @@
-import React, { FC, DetailedHTMLProps, HTMLAttributes } from 'react';
+import React, { FC } from 'react';
 import modalOverlayStyles from './ModalOverlay.module.css';
-import PropTypes from 'prop-types';
-
-interface TModalOverlay extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-    onClick: () => void;
-}
+import {TModalOverlay} from '../../utils/types';
 
 const ModalOverlay: FC<TModalOverlay> = ({ onClick }) => {
     // пропс onClick - это колбэк для клика по подложке, который закрывает модальное окно

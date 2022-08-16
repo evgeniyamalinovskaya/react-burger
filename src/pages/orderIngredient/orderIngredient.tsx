@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import {useParams, useRouteMatch} from 'react-router-dom';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import orderIngredientStyle from './orderIngredient.module.css';
@@ -12,33 +12,22 @@ export const OrderIngredient: FC = () => {
     let isProfile = match.path === profilePath;
 
     const allOrders = useAppSelector(store => store.wsOrders.orders);
-    const myOrders = useAppSelector(store => store.wsUser.orders).slice();
+    const myOrders = useAppSelector(store => store.wsUser.orders);
     let orders = isProfile ? myOrders : allOrders;
 
     const ingredients = useAppSelector((store) => store.burgerIngredients.ingredients);
     const order = orders?.find((order) => order._id === id);
     const knowIngredient = order?.ingredients.map((orderIngredient) => ingredients.find((ingredient) => ingredient._id === orderIngredient))
 
-    // const price = useMemo(() => {
-    //     return knowIngredient?.reduce((sum, item) => {
-    //         if (item.type === 'bun') {
-    //             return sum += item.price * 2
-    //         }
-    //         return sum += (item ? item.price : 0);
-    //     }, 0);
-    // }, [knowIngredient])
-
     //Функция для использование подсчёта стоимости
-    const price = () => {
-        let sum = 0;
-        knowIngredient?.forEach((ingredient) => {
-            const orderedIngredient = ingredients.find((orderIngredient) => orderIngredient?._id === ingredient?._id);
-            if (orderedIngredient?.price) {
-                sum += orderedIngredient.price;
+    const price = useMemo(() => {
+        return knowIngredient?.reduce((sum, item) => {
+            if (item?.type === 'bun') {
+                return sum += item.price * 2
             }
-        });
-        return sum;
-    };
+            return sum += (item ? item.price : 0);
+        }, 0);
+    }, [knowIngredient])
 
     //Изменение даты
     const formatDate = (string: string) => {
@@ -71,8 +60,8 @@ export const OrderIngredient: FC = () => {
                                         </p>
                                     </div>
                                     <div className={`text text_type_digits-default ${orderIngredientStyle.currency}`}>
-                                        <span> {knowIngredient && knowIngredient.filter((filteredIngredient) =>
-                                            filteredIngredient?._id === ingredient?._id).length} </span>
+                                        <span> {knowIngredient && (knowIngredient.filter(item => (item?._id === ingredient?._id) && (item?.type !== 'bun')).length) === 0 ? 2 :
+                                            (knowIngredient?.filter(item => (item?._id === ingredient?._id)).length) }</span>
                                         x
                                         <div
                                             className={`text text_type_digits-default ${orderIngredientStyle.currency_container}`}>
@@ -90,7 +79,7 @@ export const OrderIngredient: FC = () => {
                     <div className={orderIngredientStyle.item}>
                         <p className={`text text_type_main-default text_color_inactive `}>{formatDate(order?.createdAt)}</p>
                         <div className={orderIngredientStyle.item_container}>
-                            <p className={`${orderIngredientStyle.price}text text_type_digits-default`}>{price}</p>
+                            <p className={`${orderIngredientStyle.price} text text_type_digits-default`}>{price}</p>
                             <CurrencyIcon type="primary"/>
                         </div>
                     </div>

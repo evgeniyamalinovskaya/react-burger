@@ -1,13 +1,11 @@
-import React from 'react';
+import React, {FC}from 'react';
 import { Route, Redirect, useLocation, RouteProps } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { FC } from 'react';
 import {useAppSelector} from "../../utils/types";
 
 //Компонент для реализации защищенного роута
 const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
     const user = useAppSelector((store) => store.user.user);
-    const location = useLocation();
+    const location = useLocation<{ from: string }>();
 
     return (
         <Route
@@ -23,10 +21,6 @@ const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
             }
         />
     );
-};
-
-ProtectedRoute.propTypes = {
-    children: PropTypes.element.isRequired,
 };
 
 export default ProtectedRoute;

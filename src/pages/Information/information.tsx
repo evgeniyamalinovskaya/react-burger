@@ -1,17 +1,8 @@
 import React, { FC } from "react";
-// import PropTypes from "prop-types";
 import { useMemo } from 'react';
 import informationStyles from './information.module.css';
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useAppSelector} from "../../utils/types";
-
-type TInformation = {
-    status: string;
-    orderNumber: number;
-    createdAt: string;
-    orderBurgerName: string;
-    ingredients: string[];
-}
+import {useAppSelector, TIngredientsType, TInformation} from "../../utils/types";
 
 export const Information: FC<TInformation> = ({status, orderNumber, createdAt, orderBurgerName, ingredients}) => {
     const allIngredients = useAppSelector(store => store.burgerIngredients.ingredients);
@@ -35,16 +26,14 @@ export const Information: FC<TInformation> = ({status, orderNumber, createdAt, o
         })
     }, [ingredientsDataArray]);
 
-    const totalOrder = ingredients.reduce((previousValue, currentItem) => {
-
-        const ingredient = allIngredients.find((item) => {
-            return currentItem === item._id;
-        });
-        if (!ingredient) {
-            return previousValue;
-        }
-        return previousValue + ingredient.price;
-    }, 0);
+    const totalOrder = useMemo(() => {
+        return ingredientData?.reduce((sum, item) => {
+            if (item?.type === 'bun') {
+                return sum += item.price * 2
+            }
+            return sum += (item ? item.price : 0);
+        }, 0);
+    }, [ingredientData])
 
     return (
         <section className={`pt-6 pr-6 pl-6 pb-6 mb-6 ${informationStyles.section}`}>
@@ -107,12 +96,8 @@ export const Information: FC<TInformation> = ({status, orderNumber, createdAt, o
     );
 }
 
-type TIng = {
-    ingredientName: string;
-    ingredientImage: string;
-}
 
-const Ingredient: FC<TIng> = ({ ingredientImage, ingredientName }) => {
+const Ingredient: FC<TIngredientsType> = ({ ingredientImage, ingredientName }) => {
     return (
         <div className={informationStyles.container}>
             <div className={informationStyles.list}>
@@ -122,15 +107,3 @@ const Ingredient: FC<TIng> = ({ ingredientImage, ingredientName }) => {
     );
 }
 
-// Ingredient.propTypes = {
-//     ingredientName: PropTypes.string.isRequired,
-//     ingredientImage: PropTypes.string.isRequired,
-// }
-//
-// Information.propTypes = {
-//     status: PropTypes.string.isRequired,
-//     orderNumber: PropTypes.number.isRequired,
-//     createdAt: PropTypes.string.isRequired,
-//     orderBurgerName: PropTypes.string.isRequired,
-//     ingredients: PropTypes.array.isRequired,
-// }

@@ -1,11 +1,11 @@
-import React, { useEffect }from 'react';
+import React, {FC, useEffect} from 'react';
 import feedStyles from './feed.module.css';
 import { Orders } from '../orders/orders';
 import { OrdersInformation } from '../orderInformation/orderInformation';
 import { wsConnectionOpen, wsConnectionClosed } from '../../services/actions/wsActionTypes';
 import {useAppDispatch} from "../../utils/types";
 
-export const Feed = () => {
+export const Feed: FC = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {

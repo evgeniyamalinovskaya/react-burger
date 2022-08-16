@@ -1,19 +1,15 @@
-import React, {FC, useMemo, ReactNode} from 'react';
+import React, {FC, useMemo} from 'react';
 import {ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './BurgerConstructor.module.css';
 import ConstructorDetails from '../ConstructorDetails/ConstructorDetails';
 import {getOrder} from "../../services/actions/order";
-import { addBun, deleteItem} from "../../services/actions/constructor";
-import { useDrop } from 'react-dnd';
+import {addBun, deleteItem} from "../../services/actions/constructor";
+import {useDrop} from 'react-dnd';
 import bunImage from './image/PyhkoigriqQ8Q4t7EziOdA.png';
 import {useHistory} from "react-router-dom";
-import {TIngredient, useAppDispatch, useAppSelector} from "../../utils/types";
+import {TIngredient, TModalOverlay, useAppDispatch, useAppSelector} from "../../utils/types";
 
-// interface Class {
-//     сlassname?: string;
-// }
-
-const BurgerConstructor: FC<HTMLStyleElement> = () => {
+const BurgerConstructor: FC<TModalOverlay> = () => {
     /* Обращение к store */
     const element = useAppSelector(store => store.burgerConstructor.element);
     const user = useAppSelector(store => store.user.user);
@@ -36,9 +32,9 @@ const BurgerConstructor: FC<HTMLStyleElement> = () => {
         !user && history.push('/login')
     };
 
-    const [{ isHover }, drop] = useDrop({
+    const [{isHover}, drop] = useDrop({
         accept: 'ingredient',
-        drop({ ingredient }: { ingredient: TIngredient; }) {
+        drop({ingredient}: { ingredient: TIngredient; }) {
             dispatch(addBun(ingredient));
         },
         collect: (monitor) => ({
@@ -51,73 +47,70 @@ const BurgerConstructor: FC<HTMLStyleElement> = () => {
     }
 
     return (
-        <div className={`${burgerConstructorStyles.section} pt-25 pl-6`}>
-            <div сlassname={ isHover
-                ? `${burgerConstructorStyles.top} ${burgerConstructorStyles.overbun}`
-                : `${burgerConstructorStyles.top} `
-            } >
-            <div className={`${burgerConstructorStyles.container} pr-2`} ref={drop}>
-
+        <div className={`${burgerConstructorStyles.section} pt-25 pl-6`} >
+           {isHover}
+                <div className={`${burgerConstructorStyles.container} pr-2`} ref={drop}>
                     {bun ? (
-                    < ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text={bun.name + " (верх)"}
-                        price={bun.price}
-                        thumbnail={bun.image_mobile}
-                        key={`top:${bun._id}`}
+                        < ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text={bun.name + " (верх)"}
+                            price={bun.price}
+                            thumbnail={bun.image_mobile}
+                            key={`top:${bun._id}`}
+                        />
+                    ) : (<ConstructorElement
+                            type="top"
+                            isLocked={true}
+                            text="Выберите булку из списка слева"
+                            price={0}
+                            thumbnail={bunImage}
+                        />
+                    )}
 
-                    />
-                    ) : ( <ConstructorElement
-                        type="top"
-                        isLocked={true}
-                        text="Выберите булку из списка слева"
-                        price={0}
-                        thumbnail={bunImage}
-                />
-                        )}
+                    {!bun &&
+                    <p className='text text_type_digits-default text_color_inactive pt-8 pl-10'>Выберите и перетащите
+                        слева
+                        начинки и соусы для бургера</p>}
+                    <div className={`${burgerConstructorStyles.card} text_type_main-default mt-4 mb-4`}>
+                        {element && element.length > 0 && element.map((item, index) => (
+                            <ConstructorDetails
+                                key={item.uId}
+                                item={item}
+                                index={index}
+                                handleDelete={handleDelete}/>
+                        ))}
 
-                {!bun && <p className='text text_type_digits-default text_color_inactive pt-8 pl-10'>Выберите и перетащите слева начинки и соусы для бургера</p>}
-            <div className={`${burgerConstructorStyles.card} text_type_main-default mt-4 mb-4`}>
-                {element && element.length > 0 && element.map((item, index) => (
-                <ConstructorDetails
-                        key={item.uId}
-                        item={item}
-                        index={index}
-                        handleDelete={handleDelete} />
-                ))}
+                    </div>
+                    {bun ? (
+                        <ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text={`${bun.name} (низ)`}
+                            price={bun.price}
+                            thumbnail={bun.image_mobile}
+                            key={`bottom:${bun._id}`}
+                        />
+                    ) : (< ConstructorElement
+                            type="bottom"
+                            isLocked={true}
+                            text="Выберите булку из списка слева"
+                            price={0}
+                            thumbnail={bunImage}
+
+                        />
+                    )}
 
                 </div>
-                {bun ? (
-                <ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text={`${bun.name} (низ)`}
-                    price={bun.price}
-                    thumbnail={bun.image_mobile}
-                    key={`bottom:${bun._id}`}
-                />
-                ) : (< ConstructorElement
-                    type="bottom"
-                    isLocked={true}
-                    text="Выберите булку из списка слева"
-                    price={0}
-                    thumbnail={bunImage}
+                <div className={`${burgerConstructorStyles.money} mt-10`}>
+                    <h3 className='text text_type_digits-medium mr-10'>
+                        {price}
+                        <CurrencyIcon type="primary"/>
+                    </h3>
+                    <Button type="primary" size="large" onClick={() => orderModal(productsIds)}>Оформить заказ</Button>
 
-                />
-                )}
-
-            </div>
-            <div className={`${burgerConstructorStyles.money} mt-10`}>
-                <h3 className='text text_type_digits-medium mr-10'>
-                    {price}
-                    <CurrencyIcon type="primary"/>
-                </h3>
-                <Button type="primary" size="large" onClick={() => orderModal(productsIds)}>Оформить заказ</Button>
-
-            </div>
+                </div>
         </div>
-            </div>
     )
 }
 

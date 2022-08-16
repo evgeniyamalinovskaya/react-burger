@@ -1,5 +1,11 @@
 import {getCookie} from '../../utils/cookie';
-import {TIngredientsParseResponse, TOrdersParseResponse, TPasswordParseResponse, TUser} from '../../utils/types';
+import {
+    TIngredientsParseResponse,
+    TLogoutParseResponse,
+    TOrdersParseResponse,
+    TPasswordParseResponse,
+    TUser
+} from '../../utils/types';
 //ссылка
 const api = {
     url: 'https://norma.nomoreparties.space/api',
@@ -100,7 +106,7 @@ const logout = (refreshToken: string) => {
             token: refreshToken
         })
     })
-        .then(res => parseResponse(res))
+        .then(res => parseResponse<TLogoutParseResponse>(res))
 }
 
 //Запрос обновления токена ()

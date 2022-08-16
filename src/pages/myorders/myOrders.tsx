@@ -5,23 +5,11 @@ import {wsUserConnectionClosed, wsUserConnectionStart} from "../../services/acti
 import profileStyles from "../profile/profile.module.css";
 import {logOut} from "../../services/actions/registration";
 import {NavLink, Route, Switch, useLocation} from "react-router-dom";
-import {useAppDispatch} from "../../utils/types";
-
-type TLocation = {
-    background: {
-        pathname: string;
-        search: string;
-        hash: string;
-        state: null;
-        key: string;
-    }
-    from: string;
-    state?: object;
-};
+import {useAppDispatch, TLocation} from "../../utils/types";
 
 export const MyOrders: FC = () => {
     const dispatch = useAppDispatch()
-    const location = useLocation<TLocation >();
+    const location = useLocation<TLocation>();
     const background = location.state?.background;
 
     useEffect(() => {

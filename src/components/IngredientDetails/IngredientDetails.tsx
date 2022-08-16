@@ -1,14 +1,11 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, {FC} from 'react';
 import ingredientDetailsStyle from './IngredientDetails.module.css';
-// import PropTypes from 'prop-types';
-// import ingredient from '../../utils/ingredient';
 import { useParams } from 'react-router-dom';
+import {useAppSelector} from "../../utils/types";
 
-
-const IngredientDetails = () => {
-    const { id } = useParams();
-    const ingredients = useSelector(store => store.burgerIngredients.ingredients);
+const IngredientDetails: FC = () => {
+    const { id } = useParams<{ id: string }>();
+    const ingredients = useAppSelector(store => store.burgerIngredients.ingredients);
     const ingredient = ingredients.find(ingredient => ingredient._id === id)
 
     return(

@@ -41,27 +41,18 @@ return (
             <form className={loginStyles.form} onSubmit={submitLogin}>
                 <div className="mt-6 mb-6">
                     <EmailInput
-                        // placeholder="email"
                         name="email"
-                        // type="email"
                         onChange={inputEmail}
                         value={email}
-                        // error={false}
-                        // errorText="Ошибка"
                         size="default"
                     />
                 </div>
                 <div className="mb-6">
                     <PasswordInput
-                        // placeholder={"Пароль"}
                         name="password"
-                        // type="password"
                         onChange={inputPassword}
                         value={password}
-                        // icon="EditIcon"
                         size="default"
-                        // error={false}
-                        // errorText="Ошибка"
                     />
                 </div>
                 <Button disabled={!(email && password)} type="primary" size="medium">Войти</Button>

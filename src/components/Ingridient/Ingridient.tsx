@@ -1,22 +1,19 @@
-import React, {useMemo} from "react";
+import React, {FC, useMemo} from "react";
 import ingredientStyles from './Ingridient.module.css'
 import { Link, useLocation } from 'react-router-dom';
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import {openIngredientCurrent} from "../../services/actions/ingredient";
-import {useDispatch, useSelector} from "react-redux";
 import { useDrag } from 'react-dnd';
-import ingredient from "../../utils/ingredient";
+import {TIngredient, useAppSelector} from "../../utils/types";
 
-const Ingredient = ({ingredient}) => {
-    const dispatch = useDispatch();
+export type TIngredients = {
+    ingredient: TIngredient;
+}
+
+const Ingredient: FC<TIngredients> = ({ingredient}) => {
     const location = useLocation();
-    // Клик по ингредиенту (открывает модальное окно)
-    const handleOpenModal = (ingredient) => {
-        dispatch(openIngredientCurrent(ingredient));
-    };
+
     /* Обращение к store */
-    const { bun, element } = useSelector(store => store.burgerConstructor);
+    const { bun, element } = useAppSelector(store => store.burgerConstructor);
     const [{ isDrag }, dragRef] = useDrag(
         {
             type: 'ingredient',
@@ -41,7 +38,7 @@ const Ingredient = ({ingredient}) => {
             pathname: `/ingredients/${ingredient._id}`,
             state: { background: location }
         }}>
-        <div className={ingredientStyles.ingredient} onClick={handleOpenModal} style={{ isDrag }} ref={dragRef}
+        <div className={ingredientStyles.ingredient} ref={dragRef}
              draggable>
             {setCount > 0 && <Counter count={setCount} size="default" />}
             <img className="ml-4 mr-4" src={ingredient.image} alt={ingredient.name}/>
@@ -54,10 +51,6 @@ const Ingredient = ({ingredient}) => {
         </div>
         </Link>
     )
-}
-
-Ingredient.propTypes = {
-    ingredient: ingredient.isRequired
 }
 
 export default Ingredient;

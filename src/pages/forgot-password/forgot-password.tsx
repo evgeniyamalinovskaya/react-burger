@@ -1,4 +1,4 @@
-import React, {useState, useRef, FC, ChangeEvent} from 'react';
+import React, {useState, useRef, FC, ChangeEvent, FormEvent} from 'react';
 import {Link, Redirect, useLocation} from 'react-router-dom';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import forgotPasswordStyles from './forgot-password.module.css';
@@ -18,7 +18,7 @@ export const ForgotPassword: FC = () => {
     }
 
     //Восстановить
-    const forgotPasswordSubmit  = (e: React.FormEvent<HTMLFormElement>) => {
+    const forgotPasswordSubmit  = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!email) {
             return;

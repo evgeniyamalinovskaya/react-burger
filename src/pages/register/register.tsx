@@ -53,23 +53,16 @@ export const Register: FC = () => {
                             errorText="Ошибка"
                              />
                         <EmailInput
-                            // placeholder="email"
                             name='email'
-                            // type='email'
                             value={emailForm}
                             onChange={inputEmail}
                             size="default"
-                            // error={false}
-                            // errorText="Ошибка"
                              />
                         <PasswordInput
                             name='password'
                             value={passwordForm}
                             onChange={inputPassword}
-                            // icon="EditIcon"
                             size="default"
-                            // error={false}
-                            // errorText="Ошибка"
                              />
                     </div>
                     <Button disabled={!(userNameForm && emailForm && passwordForm)} type="primary" size="medium">Зарегистрироваться</Button>

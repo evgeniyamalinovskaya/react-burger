@@ -18,6 +18,7 @@ import {
     WS_USER_SEND_MESSAGE
 } from "../services/actions/wsUser";
 import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux';
+import {ReactNode} from "react";
 
 type TApplicationActions = TIngredientModalActions | TGetIngredientsActions | TGetOrderActions | TUserActions | TWsActions | TWsUserActions;
 
@@ -47,25 +48,28 @@ export type TIngredient = {
     __v: number;
     uId?: string;
     currentTab?: number | undefined;
+    count: number;
+    id: string;
 };
 
 //Типы для Api
+//(ingredients)
 export type TIngredientsParseResponse = {
     data: TIngredient[];
     success: boolean;
 }
-
+//(orders)
 export type TOrdersParseResponse = {
     name: string;
     order: { number: number };
     success: boolean;
 }
+//(password)
 export type TPasswordParseResponse = {
     success: boolean;
     message: string;
 }
-
-//Тип для User
+//(login, register, user, token)
 export type TUser = {
     success: boolean;
     user: {
@@ -75,9 +79,14 @@ export type TUser = {
     accessToken: string;
     refreshToken: string;
 };
+//(logout)
+export type TLogoutParseResponse = {
+    success: boolean;
+    message: string;
+}
 
 //Тип для socketMiddleware (токен)
-export interface TWsUserSocketMiddlewareActions {
+export type TWsUserSocketMiddlewareActions = {
     wsInitWithToken?: typeof WS_USER_CONNECTION_START,
     wsSendMessage: typeof WS_USER_SEND_MESSAGE,
     onOpen: typeof WS_USER_CONNECTION_SUCCESS,
@@ -86,13 +95,77 @@ export interface TWsUserSocketMiddlewareActions {
     onMessage: typeof WS_USER_GET_MESSAGE,
 }
 //Тип для socketMiddleware (user)
-export interface TWsSocketMiddlewareActions {
+export type TWsSocketMiddlewareActions = {
     wsInit?: typeof WS_CONNECTION_START,
     wsSendMessage: typeof WS_SEND_MESSAGE,
     onOpen: typeof WS_CONNECTION_SUCCESS,
     onClose: typeof WS_CONNECTION_CLOSED,
     onError: typeof WS_CONNECTION_ERROR,
     onMessage: typeof WS_GET_MESSAGE,
+}
+//Тип для Локации
+export type TLocation = {
+    background: {
+        pathname: string;
+        search: string;
+        hash: string;
+        state: null;
+        key: string;
+    }
+    from: string;
+    state?: object;
+};
+
+//тип для Information
+export type TInformation = {
+    status: string;
+    orderNumber: number;
+    createdAt: string;
+    orderBurgerName: string;
+    ingredients: string[];
+}
+
+//Тип для Ingredient
+export type TIngredientsType = {
+    ingredientName: string;
+    ingredientImage: string;
+}
+
+//Тип для ModalOverlay
+export type TModalOverlay = {
+    onClick: () => void;
+}
+
+//Тип для Modal
+export type TModal = {
+    onClose: () => void;
+    children?: ReactNode;
+    title: string;
+}
+
+//Тип для IngredientsCategory
+export type TIngredientsCategory = {
+    type: TProductType;
+    categories: TIngredient[];
+}
+
+//Тип для (Bun, Main, Sauce)
+export type TProductType = {
+    type: string;
+    name: string;
+};
+
+export type TProductsType = {
+    Bun: TProductType;
+    Main: TProductType;
+    Sauce: TProductType;
+};
+
+//Тип для ConstructorDetails
+export type TConstructorDetails = {
+    item: TIngredient;
+    index: number;
+    handleDelete: (item: TIngredient) => void;
 }
 
 export type TOrderDetails = {
@@ -102,14 +175,15 @@ export type TOrderDetails = {
     status: string;
     number: number;
     createdAt: string;
-    updatedAt: string;
     id?: string;
 };
 
+//Тип для TWsUserActions
 export type TOrder = {
     success: boolean;
     orders: TOrderDetails[];
     total: number;
     totalToday: number;
 };
+
 
